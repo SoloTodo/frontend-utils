@@ -53,7 +53,6 @@ export default function ApiFormPriceRangeComponent({
         price_ranges.min < priceRanges.min ||
         price_ranges.max > priceRanges.max
       ) {
-        console.log("aqui");
         setPriceRanges(price_ranges);
       }
     }
