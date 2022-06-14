@@ -1,5 +1,11 @@
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
-import { Box, Slider, Stack, Typography } from "@mui/material";
+import {
+  Box,
+  CircularProgress,
+  Slider,
+  Stack,
+  Typography,
+} from "@mui/material";
 import { Currency } from "src/frontend-utils/redux/api_resources/types";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPriceRange } from "./ApiFormPriceRange";
@@ -16,22 +22,66 @@ export default function ApiFormPriceRangeComponent({
   name,
   label,
   currencyUsed,
-  initPriceRanges,
 }: {
   name: string;
   label: string;
   currencyUsed: Currency;
-  initPriceRanges: Record<string, PriceRanges>;
 }) {
   const context = useContext(ApiFormContext);
   const field = context.getField(name) as ApiFormPriceRange | undefined;
   const [cleanedData, setCleanedData] = useState([0, 0]);
-  const [priceRanges, setPriceRanges] = useState<PriceRanges>(
-    initPriceRanges[name]
-  );
+  const [priceRanges, setPriceRanges] = useState<PriceRanges>({
+    "80th": 0,
+    min: 0,
+    max: 0,
+  });
 
   if (typeof field === "undefined") {
     throw `Invalid field name: ${name}`;
+  }
+
+  useEffect(() => {
+    if (
+      typeof field.cleanedData !== "undefined" &&
+      context.currentResult !== null &&
+      context.currentResult.price_ranges !== null &&
+      JSON.stringify(context.currentResult.price_ranges) !==
+        JSON.stringify(priceRanges)
+    ) {
+      const price_ranges = context.currentResult.price_ranges[name];
+      if (
+        price_ranges.min < priceRanges.min ||
+        price_ranges.max > priceRanges.max
+      ) {
+        console.log("aqui");
+        setPriceRanges(price_ranges);
+      }
+    }
+  }, [context.currentResult]);
+
+  useEffect(() => {
+    if (typeof field.cleanedData !== "undefined" && priceRanges["80th"] !== 0) {
+      const minNorm = normalizeValue(field.cleanedData[0], 0);
+      const maxNorm = normalizeValue(field.cleanedData[1], 1000);
+      setCleanedData([
+        currency(minNorm, { precision: 0 }).intValue,
+        currency(maxNorm, { precision: 0 }).intValue,
+      ]);
+    }
+  }, [field.cleanedData, priceRanges["80th"]]);
+
+  if (
+    context.currentResult === null ||
+    typeof field.cleanedData === "undefined"
+  ) {
+    return (
+      <Stack direction="column">
+        <Typography>{label}</Typography>
+        <div style={{ textAlign: "center" }}>
+          <CircularProgress color="inherit" />
+        </div>
+      </Stack>
+    );
   }
 
   const normalizeValue = (
@@ -67,35 +117,6 @@ export default function ApiFormPriceRangeComponent({
       );
     }
   };
-
-  useEffect(() => {
-    if (
-      typeof field.cleanedData !== "undefined" &&
-      context.currentResult !== null &&
-      context.currentResult.price_ranges !== null &&
-      JSON.stringify(context.currentResult.price_ranges) !==
-        JSON.stringify(priceRanges)
-    ) {
-      const price_ranges = context.currentResult.price_ranges[name];
-      if (
-        price_ranges.min < priceRanges.min ||
-        price_ranges.max > priceRanges.max
-      ) {
-        setPriceRanges(price_ranges);
-      }
-    }
-  }, []);
-
-  useEffect(() => {
-    if (typeof field.cleanedData !== "undefined" && priceRanges["80th"] !== 0) {
-      const minNorm = normalizeValue(field.cleanedData[0], 0);
-      const maxNorm = normalizeValue(field.cleanedData[1], 1000);
-      setCleanedData([
-        currency(minNorm, { precision: 0 }).intValue,
-        currency(maxNorm, { precision: 0 }).intValue,
-      ]);
-    }
-  }, [field.cleanedData, priceRanges["80th"]]);
 
   const handleChange = (event: Event, newValue: number | number[]) => {
     setCleanedData(newValue as number[]);
