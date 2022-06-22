@@ -18,10 +18,12 @@ export type CellPlan = {
 
 export type Entity = {
   active_registry?: {
+    id: number;
+    url: string;
     normal_price: string;
     offer_price: string;
     is_available: boolean;
-    cell_monthly_payment: string,
+    cell_monthly_payment: string | null,
   };
   bundle: Bundle | null;
   category: string;
