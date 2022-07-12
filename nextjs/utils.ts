@@ -1,7 +1,7 @@
 import { GetServerSidePropsContext } from "next";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
-import atob from 'atob'
+import atob from "atob";
 import { apiSettings } from "../settings";
 
 type GetServerSidePropsContextOrNull =
@@ -147,7 +147,7 @@ export const getStore = async (context: GetServerSidePropsContext) => {
     const store = await jwtFetch(
       context,
       `${apiSettings.apiResourceEndpoints.stores}${context.params?.id}`
-    )
+    );
     return {
       props: {
         store: store,
@@ -159,3 +159,15 @@ export const getStore = async (context: GetServerSidePropsContext) => {
     };
   }
 };
+
+export function fetchAuth(
+  context: GetServerSidePropsContextOrNull,
+  input: string,
+  init?: FetchJsonInit
+) {
+  if (typeof parseCookies(context)["authTokens"] !== "undefined") {
+    return jwtFetch(context, input, init);
+  } else {
+    return fetchJson(input, init);
+  }
+}

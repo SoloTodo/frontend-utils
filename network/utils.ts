@@ -9,7 +9,7 @@ type FetchJsonHeaders = {
 export type FetchJsonInit = {
     headers?: FetchJsonHeaders,
     method?: string,
-    body?: string
+    body?: string | FormData
 }
 
 export async function fetchJson(input: string, init?: FetchJsonInit): Promise<any> {
