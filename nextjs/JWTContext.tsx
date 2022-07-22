@@ -4,9 +4,7 @@ import { FetchJsonInit, InvalidTokenError } from "../network/utils";
 import { deleteAuthTokens, jwtFetch } from "./utils";
 import userSlice from "../redux/user";
 import { useSnackbar } from "notistack";
-// import { useAppDispatch } from "src/store/hooks";
-// import { useDispatch } from 'react-redux';
-import { dispatch } from "../../store/store";
+import { useDispatch } from 'react-redux';
 
 function defaultAuthFetch(input: string, init?: FetchJsonInit): Promise<any> {
   return Promise.reject();
@@ -14,7 +12,7 @@ function defaultAuthFetch(input: string, init?: FetchJsonInit): Promise<any> {
 
 const AuthContext = React.createContext({
   authFetch: defaultAuthFetch,
-  logout: () => {},
+  logout: (withRoute = true) => {},
 });
 
 type AuthProviderProps = {
@@ -22,7 +20,7 @@ type AuthProviderProps = {
 };
 
 export const AuthProvider = ({ children }: AuthProviderProps) => {
-  // const dispatch = useDispatch();
+  const dispatch = useDispatch();
   const { enqueueSnackbar } = useSnackbar();
   const router = useRouter();
 
@@ -48,11 +46,11 @@ export const AuthProvider = ({ children }: AuthProviderProps) => {
     }
   };
 
-  const logout = () => {
+  const logout = (withRoute = true) => {
     deleteAuthTokens(null);
     dispatch(userSlice.actions.setUser(null));
     enqueueSnackbar("Sesión cerrada exitosamente");
-    router.push("/login");
+    withRoute && router.push("/login");
   };
 
   return (
