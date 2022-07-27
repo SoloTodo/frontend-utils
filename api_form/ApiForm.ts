@@ -4,7 +4,7 @@ import {
   ApiFormSelectProps,
 } from "./fields/select/ApiFormSelect";
 import { FetchJsonInit } from "../network/utils";
-import { jwtFetch } from "../nextjs/utils";
+import { fetchAuth } from "../nextjs/utils";
 import {
   ApiFormPaginationProps,
   ApiFormPagination,
@@ -62,7 +62,7 @@ export class ApiForm {
   ) {
     this.endpoint = new URL(endpoint);
     this.fetchFunction = (input: string, init?: FetchJsonInit) =>
-      jwtFetch(null, input, init);
+      fetchAuth(null, input, init);
 
     for (const fieldMetadata of fieldsMetadata) {
       switch (fieldMetadata.fieldType) {
@@ -124,7 +124,7 @@ export class ApiForm {
 
   initialize(context?: GetServerSidePropsContext) {
     this.fetchFunction = (input: string, init?: FetchJsonInit) =>
-      jwtFetch(context, input, init);
+      fetchAuth(context, input, init);
 
     const currentUrl =
       context && context.req
