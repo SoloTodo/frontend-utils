@@ -1,4 +1,10 @@
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, {
+  ReactNode,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react";
 import { ApiForm, ApiFormFieldMetadata } from "./ApiForm";
 import { ApiFormProvider } from "./ApiFormContext";
 import { useRouter } from "next/router";
@@ -26,12 +32,29 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
         props.endpoint,
         props.initialState && props.initialState.initialData
       ),
-    []
+    [props.endpoint, props.fieldsMetadata, props.initialState]
   );
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null
   );
   const [isLoading, setIsLoading] = useState(true);
+
+  const updateUrl = useCallback(
+    (newUrlParams: Record<string, string[]>) => {
+      const currentQuery = router.query;
+      for (const [key, value] of Object.entries(newUrlParams)) {
+        currentQuery[key] = value;
+      }
+
+      if (!Object.keys(newUrlParams).includes("page"))
+        delete currentQuery["page"];
+
+      const newSearch = queryString.stringify(currentQuery);
+      const newPath = newSearch ? `${router.route}?${newSearch}` : router.route;
+      router.push(newPath, undefined, { shallow: true });
+    },
+    [router]
+  );
 
   useEffect(() => {
     let cancel = false;
@@ -72,21 +95,8 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
       cancel = true;
       router.events.off("routeChangeComplete", handleRouteChange);
     };
-  }, []);
+  }, [form, props, router.events, updateUrl]);
 
-  const updateUrl = (newUrlParams: Record<string, string[]>) => {
-    const currentQuery = router.query;
-    for (const [key, value] of Object.entries(newUrlParams)) {
-      currentQuery[key] = value;
-    }
-
-    if (!Object.keys(newUrlParams).includes("page"))
-      delete currentQuery["page"];
-
-    const newSearch = queryString.stringify(currentQuery);
-    const newPath = newSearch ? `${router.route}?${newSearch}` : router.route;
-    router.push(newPath, undefined, { shallow: true });
-  };
   return (
     <ApiFormProvider
       form={form}

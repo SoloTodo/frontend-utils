@@ -30,12 +30,14 @@ export default function ApiFormPaginationComponent() {
       rowsPerPageOptions={[5, 10, 20, 50, 100, 200]}
       component="div"
       colSpan={3}
-      count={data.count}
+      count={data ? data.count : 0}
       rowsPerPage={page_size ? Number(page_size) : 5}
       page={page ? Number(page) - 1 : 0}
       onPageChange={(_e, v) => handleChange((v + 1).toString(), "page")}
       onRowsPerPageChange={(e) => handleChange(e.target.value, "page_size")}
       labelRowsPerPage="Filas por pág."
+      showFirstButton
+      showLastButton
     />
   );
 }
