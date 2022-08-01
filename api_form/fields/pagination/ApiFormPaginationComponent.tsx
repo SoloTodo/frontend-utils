@@ -35,7 +35,10 @@ export default function ApiFormPaginationComponent() {
       page={page ? Number(page) - 1 : 0}
       onPageChange={(_e, v) => handleChange((v + 1).toString(), "page")}
       onRowsPerPageChange={(e) => handleChange(e.target.value, "page_size")}
-      labelRowsPerPage="Filas por pág."
+      labelRowsPerPage="Items por pág."
+      labelDisplayedRows={({ from, to, count }) =>
+        `${from}–${to} de ${count !== -1 ? count : `más que ${to}`}`
+      }
       showFirstButton
       showLastButton
     />
