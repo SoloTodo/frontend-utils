@@ -37,65 +37,38 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null
   );
-  const [isLoading, setIsLoading] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const [marker, setMarker] = useState(0);
 
-  const updateUrl = useCallback(
-    (newUrlParams: Record<string, string[]>) => {
-      const currentQuery = router.query;
-      for (const [key, value] of Object.entries(newUrlParams)) {
-        currentQuery[key] = value;
-      }
-
-      if (!Object.keys(newUrlParams).includes("page"))
-        delete currentQuery["page"];
-
-      const newSearch = queryString.stringify(currentQuery);
-      const newPath = newSearch ? `${router.route}?${newSearch}` : router.route;
-      router.push(newPath, undefined, { shallow: true });
-    },
-    [router]
-  );
-
-  useEffect(() => {
-    let cancel = false;
-    form.initialize();
-    if (!props.requiresSubmit) {
-      form.submit().then((results) => {
-        if (cancel) return;
-        setCurrentResult(results);
-        setIsLoading(false);
-      });
-    } else {
-      updateUrl({ submit: [] });
-      setIsLoading(false);
+  const updateUrl = (newUrlParams: Record<string, string[]>) => {
+    const currentQuery = router.query;
+    for (const [key, value] of Object.entries(newUrlParams)) {
+      currentQuery[key] = value;
     }
 
-    const handleRouteChange = (url: string) => {
-      const parseUrl = queryString.parseUrl(url);
+    if (!Object.keys(newUrlParams).includes("page"))
+      delete currentQuery["page"];
 
-      form.initialize();
+    const newSearch = queryString.stringify(currentQuery);
+    const newPath = newSearch ? `${router.route}?${newSearch}` : router.route;
+    router.push(newPath, undefined, { shallow: true });
+  };
+
+  useEffect(() => {
+    form.initialize();
+    const parseUrl = queryString.parseUrl(router.asPath);
+    if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
       setIsLoading(true);
-      if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
-        form.submit().then((results) => {
-          if (cancel) return;
-          setCurrentResult(results);
-          if (props.requiresSubmit)
-            updateUrl({ ...parseUrl.query, submit: [] });
-          props.onResultsChange && props.onResultsChange(results);
-          setIsLoading(false);
-        });
-      } else {
+      form.submit().then((results) => {
+        setCurrentResult(results);
+        props.onResultsChange && props.onResultsChange(results);
         setIsLoading(false);
-      }
-    };
-
-    router.events.on("routeChangeComplete", handleRouteChange);
-
-    return () => {
-      cancel = true;
-      router.events.off("routeChangeComplete", handleRouteChange);
-    };
-  }, [form, props, router.events, updateUrl]);
+      });
+      if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
+    } else {
+      setMarker(marker + 1);
+    }
+  }, [router.asPath]);
 
   return (
     <ApiFormProvider
