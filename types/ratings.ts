@@ -15,5 +15,5 @@ export type Rating = {
   store_rating: number;
   url: string;
   user: User;
-  email_or_phone: string | null
+  email_or_phone: string | null;
 };
