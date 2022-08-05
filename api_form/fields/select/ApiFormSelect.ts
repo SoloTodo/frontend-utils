@@ -53,16 +53,16 @@ export class ApiFormSelect {
             (choice) => typeof choice !== "undefined"
           ) as ApiFormSelectChoice[])
       : undefined;
-    
-    if (typeof parsedData == "undefined") {
+
+    if (typeof parsedData === "undefined") {
       if (!this.required) {
         return [];
       } else {
         return [this.choices[0]];
       }
     }
-    
-    if (this.required && parsedData.length == 0) {
+
+    if (this.required && parsedData.length === 0) {
       return [this.choices[0]];
     }
 

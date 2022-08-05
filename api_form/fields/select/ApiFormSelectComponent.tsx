@@ -40,7 +40,6 @@ export default function ApiFormSelectComponent(
     if ("length" in selected) {
       const newValues = selected.map((option) => option.value.toString());
       context.updateUrl({ [props.name]: newValues });
-      return;
     } else {
       context.updateUrl({ [props.name]: [selected.value.toString()] });
     }
@@ -142,7 +141,9 @@ export default function ApiFormSelectComponent(
       options={choices}
       renderInput={(params) => <TextField {...params} label={props.label} />}
       renderOption={(props, option) => (
-        <li {...props} key={option.value}>{option.label}</li>
+        <li {...props} key={option.value}>
+          {option.label}
+        </li>
       )}
       filterSelectedOptions
       onChange={(_evt, newValues) => handleChange(newValues)}
