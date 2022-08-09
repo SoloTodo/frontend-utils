@@ -1,6 +1,6 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import React, {
   ReactNode,
-  useCallback,
   useEffect,
   useMemo,
   useState,
@@ -32,7 +32,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
         props.endpoint,
         props.initialState && props.initialState.initialData
       ),
-    [props.endpoint, props.fieldsMetadata, props.initialState]
+    []
   );
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null
