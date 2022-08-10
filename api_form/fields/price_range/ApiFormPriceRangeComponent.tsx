@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import {
   Box,
@@ -106,13 +107,19 @@ export default function ApiFormPriceRangeComponent({
   const denormalizeValue = (value: number) => {
     if (value <= 800) {
       return (
-        priceRanges.min +
-        (value / 800) * (priceRanges["80th"] - priceRanges.min)
+        Math.round(
+          (priceRanges.min +
+            (value / 800) * (priceRanges["80th"] - priceRanges.min)) *
+            100
+        ) / 100
       );
     } else {
       return (
-        priceRanges["80th"] +
-        ((value - 800) / 200) * (priceRanges.max - priceRanges["80th"])
+        Math.round(
+          (priceRanges["80th"] +
+            ((value - 800) / 200) * (priceRanges.max - priceRanges["80th"])) *
+            100
+        ) / 100
       );
     }
   };
@@ -140,8 +147,8 @@ export default function ApiFormPriceRangeComponent({
       maxValue = [denormalizeValue(cleanedData[1]).toString()];
     }
     context.updateUrl({
-      [`${name}_min`]: minValue,
-      [`${name}_max`]: maxValue,
+      [`${name}_start`]: minValue,
+      [`${name}_end`]: maxValue,
     });
   };
 

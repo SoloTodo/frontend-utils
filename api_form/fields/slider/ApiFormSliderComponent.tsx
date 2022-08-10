@@ -83,7 +83,8 @@ export default function ApiFormSliderComponent({
     }
 
     for (let i = lowLimit; i <= limit; i++) {
-      const docCount = aggsValues.filter((a) => a.id <= step * i);
+      const currentStep = Math.round(step * i * 1000) / 1000;
+      const docCount = aggsValues.filter((a) => a.id <= currentStep);
       const count =
         docCount.length !== 0
           ? docCount.reduce(
@@ -92,9 +93,9 @@ export default function ApiFormSliderComponent({
             )
           : 0;
       choices.push({
-        index: step * i,
-        value: step * i,
-        label: (step * i).toString(),
+        index: currentStep,
+        value: currentStep,
+        label: currentStep.toString(),
         count: count,
       });
     }
@@ -138,8 +139,8 @@ export default function ApiFormSliderComponent({
       maxValue = [cleanedData[1].toString()];
     }
     context.updateUrl({
-      [`${name}_min`]: minValue,
-      [`${name}_max`]: maxValue,
+      [`${name}_start`]: minValue,
+      [`${name}_end`]: maxValue,
     });
   };
 

@@ -49,8 +49,8 @@ export class ApiFormSlider {
   }
 
   loadData(query: URLSearchParams) {
-    const start = query.get(`${this.name}_min`);
-    const end = query.get(`${this.name}_max`);
+    const start = query.get(`${this.name}_start`);
+    const end = query.get(`${this.name}_end`);
 
     if (this.step === null) {
       const choiceStart = this.choices.filter((c) => c.value === Number(start));

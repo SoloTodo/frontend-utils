@@ -35,7 +35,10 @@ export class ApiFormSelect {
   }
 
   loadData(query: URLSearchParams) {
-    this.cleanedData = this.cleanData(query.getAll(this.name));
+    let name = this.name;
+    if (name.endsWith('_min')) name = name.replace('_min', '_start')
+    if (name.endsWith('_max')) name = name.replace('_max', '_end')
+    this.cleanedData = this.cleanData(query.getAll(name));
   }
 
   cleanData(data?: string | string[]): ApiFormSelectChoice[] | undefined {

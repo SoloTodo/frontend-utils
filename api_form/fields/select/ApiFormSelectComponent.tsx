@@ -32,16 +32,20 @@ export default function ApiFormSelectComponent(
   const handleChange = (
     selected: ApiFormSelectChoice | ApiFormSelectChoice[] | null
   ) => {
+    let name = props.name;
+    if (name.endsWith('_min')) name = name.replace('_min', '_start')
+    if (name.endsWith('_max')) name = name.replace('_max', '_end')
+
     if (selected === null) {
-      context.updateUrl({ [props.name]: [] });
+      context.updateUrl({ [name]: [] });
       return;
     }
 
     if ("length" in selected) {
       const newValues = selected.map((option) => option.value.toString());
-      context.updateUrl({ [props.name]: newValues });
+      context.updateUrl({ [name]: newValues });
     } else {
-      context.updateUrl({ [props.name]: [selected.value.toString()] });
+      context.updateUrl({ [name]: [selected.value.toString()] });
     }
   };
 
