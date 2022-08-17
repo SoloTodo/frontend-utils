@@ -48,7 +48,7 @@ export default function ApiFormDateRangePickerComponent({
           value={cleanedData[0]}
           maxDate={cleanedData[1] || new Date()}
           inputFormat="dd/MM/yyyy"
-          onChange={(newValue) => handleChange(newValue, 0)}
+          onChange={(newValue: Date | null) => handleChange(newValue, 0)}
           renderInput={(params) => <TextField {...params} />}
         />
         <DesktopDatePicker
