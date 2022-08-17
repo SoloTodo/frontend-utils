@@ -3,7 +3,7 @@ import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormDateRangePicker } from "./ApiFormDateRangePicker";
-import { Stack, TextField } from "@mui/material";
+import { Stack, TextField, TextFieldProps } from "@mui/material";
 import { isValid, set } from "date-fns";
 
 export default function ApiFormDateRangePickerComponent({
@@ -49,16 +49,16 @@ export default function ApiFormDateRangePickerComponent({
           maxDate={cleanedData[1] || new Date()}
           inputFormat="dd/MM/yyyy"
           onChange={(newValue: Date | null) => handleChange(newValue, 0)}
-          renderInput={(params) => <TextField {...params} />}
+          renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
         <DesktopDatePicker
           label="hasta"
           value={cleanedData[1]}
-          minDate={cleanedData[0]}
+          minDate={cleanedData[0] || undefined}
           maxDate={new Date()}
           inputFormat="dd/MM/yyyy"
-          onChange={(newValue) => handleChange(newValue, 1)}
-          renderInput={(params) => <TextField {...params} />}
+          onChange={(newValue: Date | null) => handleChange(newValue, 1)}
+          renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
       </Stack>
     </LocalizationProvider>
