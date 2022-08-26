@@ -1,5 +1,16 @@
 import React, { useContext } from "react";
-import { Autocomplete, TextField } from "@mui/material";
+import {
+  Autocomplete,
+  Box,
+  Chip,
+  FormControl,
+  InputLabel,
+  MenuItem,
+  Select,
+  TextField,
+  useMediaQuery,
+  useTheme,
+} from "@mui/material";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormSelect, ApiFormSelectChoice } from "./ApiFormSelect";
 
@@ -7,6 +18,7 @@ type ApiFormSelectComponentProps = {
   name: string;
   label: string;
   exact?: boolean;
+  selectOnly?: boolean;
 };
 
 type DocCount = {
@@ -22,6 +34,8 @@ export const choicesYesNo = [
 export default function ApiFormSelectComponent(
   props: ApiFormSelectComponentProps
 ) {
+  const theme = useTheme();
+  const isMobile = useMediaQuery(theme.breakpoints.down("sm"));
   const context = useContext(ApiFormContext);
   const field = context.getField(props.name) as ApiFormSelect | undefined;
 
@@ -33,8 +47,8 @@ export default function ApiFormSelectComponent(
     selected: ApiFormSelectChoice | ApiFormSelectChoice[] | null
   ) => {
     let name = props.name;
-    if (name.endsWith('_min')) name = name.replace('_min', '_start')
-    if (name.endsWith('_max')) name = name.replace('_max', '_end')
+    if (name.endsWith("_min")) name = name.replace("_min", "_start");
+    if (name.endsWith("_max")) name = name.replace("_max", "_end");
 
     if (selected === null) {
       context.updateUrl({ [name]: [] });
@@ -139,7 +153,58 @@ export default function ApiFormSelectComponent(
     return option.value === value.value;
   };
 
-  return (
+  const handleChangeSelect = (
+    selected: string | number | (string | number)[]
+  ) => {
+    if (typeof selected === "string" || typeof selected === "number") {
+      const selectedChoices = choices.filter((c) => c.value === selected);
+      handleChange(selectedChoices);
+    } else {
+      const selectedChoices = choices.filter((c) => selected.includes(c.value));
+      handleChange(selectedChoices);
+    }
+  };
+
+  return isMobile || props.selectOnly ? (
+    <FormControl fullWidth>
+      <InputLabel id="multiple-name-label">{props.label}</InputLabel>
+      <Select
+        labelId="multiple-name-label"
+        id="multiple-name"
+        multiple={field.multiple}
+        required={field.required}
+        label={props.label}
+        value={
+          typeof cleanedData === "undefined" || cleanedData === null
+            ? ""
+            : "length" in cleanedData
+            ? cleanedData.map((c) => c.value)
+            : cleanedData.value
+        }
+        renderValue={(selected) =>
+          typeof selected !== "string" && typeof selected !== "number" ? (
+            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 0.5 }}>
+              {selected.map((s) => (
+                <Chip
+                  key={s}
+                  label={choices.filter((c) => c.value === s)[0].label}
+                />
+              ))}
+            </Box>
+          ) : (
+            choices.filter((c) => c.value === selected)[0].label
+          )
+        }
+        onChange={(evt) => handleChangeSelect(evt.target.value)}
+      >
+        {choices.map((c) => (
+          <MenuItem key={c.value} value={c.value}>
+            {c.label}
+          </MenuItem>
+        ))}
+      </Select>
+    </FormControl>
+  ) : (
     <Autocomplete<ApiFormSelectChoice, boolean, boolean>
       multiple={field.multiple}
       options={choices}
