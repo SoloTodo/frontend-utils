@@ -30,6 +30,7 @@ import {
   ApiFormPriceRange,
   ApiFormPriceRangeProps,
 } from "./fields/price_range/ApiFormPriceRange";
+import { ApiFormTree, ApiFormTreeProps } from "./fields/tree/ApiFormTree";
 
 export type ApiFormFieldMetadata =
   | ApiFormSelectProps
@@ -39,7 +40,8 @@ export type ApiFormFieldMetadata =
   | ApiFormSubmitProps
   | ApiFormRemoveListFieldProps
   | ApiFormSliderProps
-  | ApiFormPriceRangeProps;
+  | ApiFormPriceRangeProps
+  | ApiFormTreeProps;
 export type ApiFormField =
   | ApiFormSelect
   | ApiFormPagination
@@ -48,7 +50,8 @@ export type ApiFormField =
   | ApiFormSubmit
   | ApiFormRemoveListField
   | ApiFormSlider
-  | ApiFormPriceRange;
+  | ApiFormPriceRange
+  | ApiFormTree;
 
 export class ApiForm {
   private fields: Record<string, ApiFormField> = {};
@@ -118,6 +121,16 @@ export class ApiForm {
             fieldMetadata.name,
             initialData && initialData[fieldMetadata.name]
           );
+          break;
+        case "tree":
+          this.fields[fieldMetadata.name] = new ApiFormTree(
+            fieldMetadata.name,
+            fieldMetadata.choices,
+            fieldMetadata.multiple,
+            fieldMetadata.required,
+            initialData && initialData[fieldMetadata.name]
+          );
+          break;
       }
     }
   }
