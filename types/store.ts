@@ -3,7 +3,7 @@ export type Store = {
   id: number;
   name: string;
   country: string;
-  last_activation: string;
+  last_activation: string | null;
   type: string;
   storescraper_class: string;
   logo: string;
