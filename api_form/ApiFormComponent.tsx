@@ -51,7 +51,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
 
     const newSearch = queryString.stringify(currentQuery);
     const newPath = newSearch ? `${router.route}?${newSearch}` : router.route;
-    router.push(newPath, undefined, { shallow: true });
+    router.push(newPath, undefined, { shallow: true, scroll: true });
   };
 
   useEffect(() => {
