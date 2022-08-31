@@ -32,7 +32,7 @@ export default function ApiFormPaginationComponent() {
       colSpan={3}
       count={data ? data.count : 0}
       rowsPerPage={page_size ? Number(page_size) : 5}
-      page={page ? Number(page) - 1 : 0}
+      page={page && data ? Number(page) - 1 : 0}
       onPageChange={(_e, v) => handleChange((v + 1).toString(), "page")}
       onRowsPerPageChange={(e) => handleChange(e.target.value, "page_size")}
       labelRowsPerPage="Items por pág."
