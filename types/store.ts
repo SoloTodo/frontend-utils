@@ -41,6 +41,7 @@ export type Category = {
   permissions: string[];
   slug: string;
   url: string;
+  short_description_template: string | null;
 };
 
 export type StoreScrapingOptions = {
