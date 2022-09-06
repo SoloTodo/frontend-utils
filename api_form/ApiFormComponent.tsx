@@ -1,10 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, {
-  ReactNode,
-  useEffect,
-  useMemo,
-  useState,
-} from "react";
+import React, { ReactNode, useEffect, useMemo, useState } from "react";
 import { ApiForm, ApiFormFieldMetadata } from "./ApiForm";
 import { ApiFormProvider } from "./ApiFormContext";
 import { useRouter } from "next/router";
@@ -32,7 +27,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
         props.endpoint,
         props.initialState && props.initialState.initialData
       ),
-    []
+    [props.endpoint]
   );
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null

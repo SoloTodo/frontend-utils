@@ -64,8 +64,8 @@ export default function ApiFormPriceRangeComponent({
       const minNorm = normalizeValue(field.cleanedData[0], 0);
       const maxNorm = normalizeValue(field.cleanedData[1], 1000);
       setCleanedData([
-        currency(minNorm, { precision: 0 }).intValue,
-        currency(maxNorm, { precision: 0 }).intValue,
+        isNaN(minNorm) ? 0 : currency(minNorm, { precision: 0 }).intValue,
+        isNaN(maxNorm) ? 1000 : currency(maxNorm, { precision: 0 }).intValue,
       ]);
     }
   }, [field.cleanedData, priceRanges["80th"]]);

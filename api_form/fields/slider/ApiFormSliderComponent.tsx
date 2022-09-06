@@ -49,7 +49,8 @@ export default function ApiFormSliderComponent({
 
   if (
     context.currentResult === null ||
-    typeof field.cleanedData === "undefined"
+    typeof field.cleanedData === "undefined" ||
+    typeof context.currentResult.aggs[field.name] === "undefined"
   ) {
     return Loading(label, true);
   }
