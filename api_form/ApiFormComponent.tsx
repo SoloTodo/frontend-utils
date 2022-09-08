@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactNode, useEffect, useMemo, useState } from "react";
+import React, { ReactNode, useEffect, useMemo, useRef, useState } from "react";
 import { ApiForm, ApiFormFieldMetadata } from "./ApiForm";
 import { ApiFormProvider } from "./ApiFormContext";
 import { useRouter } from "next/router";
@@ -19,21 +19,21 @@ type ApiFormComponentProps = {
 
 export default function ApiFormComponent(props: ApiFormComponentProps) {
   const router = useRouter();
-
-  const form = useMemo(
-    () =>
-      new ApiForm(
-        props.fieldsMetadata,
-        props.endpoint,
-        props.initialState && props.initialState.initialData
-      ),
-    [props.endpoint]
-  );
+  const notInitialRender = useRef(!props.initialState);
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null
   );
   const [isLoading, setIsLoading] = useState(false);
-  const [marker, setMarker] = useState(0);
+
+  const form = useMemo(() => {
+    notInitialRender.current = !props.initialState;
+    props.initialState && setCurrentResult(props.initialState.initialResult);
+    return new ApiForm(
+      props.fieldsMetadata,
+      props.endpoint,
+      props.initialState && props.initialState.initialData
+    );
+  }, [props.endpoint]);
 
   const updateUrl = (newUrlParams: Record<string, string[]>) => {
     const currentQuery = router.query;
@@ -51,17 +51,19 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
 
   useEffect(() => {
     form.initialize();
-    const parseUrl = queryString.parseUrl(router.asPath);
-    if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
-      setIsLoading(true);
-      form.submit().then((results) => {
-        setCurrentResult(results);
-        props.onResultsChange && props.onResultsChange(results);
-        setIsLoading(false);
-      });
-      if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
+    if (notInitialRender.current) {
+      const parseUrl = queryString.parseUrl(router.asPath);
+      if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
+        setIsLoading(true);
+        form.submit().then((results) => {
+          setCurrentResult(results);
+          props.onResultsChange && props.onResultsChange(results);
+          setIsLoading(false);
+        });
+        if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
+      }
     } else {
-      setMarker(marker + 1);
+      notInitialRender.current = true;
     }
   }, [router.asPath]);
 
