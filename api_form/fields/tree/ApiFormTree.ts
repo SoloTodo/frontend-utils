@@ -25,13 +25,13 @@ export class ApiFormTree {
     choices: ApiFormTreeChoice[],
     multiple?: boolean,
     required?: boolean,
-    cleanedData?: ApiFormTreeChoice[]
+    cleanedData?: URLSearchParams
   ) {
     this.name = name;
     this.choices = choices;
     this.multiple = multiple || false;
     this.required = required || false;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {

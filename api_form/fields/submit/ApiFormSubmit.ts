@@ -23,8 +23,8 @@ export const submitReady = (
 export class ApiFormSubmit {
   cleanedData?: boolean;
 
-  constructor(cleanData?: boolean) {
-    this.cleanedData = cleanData;
+  constructor(cleanedData?: URLSearchParams) {
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {

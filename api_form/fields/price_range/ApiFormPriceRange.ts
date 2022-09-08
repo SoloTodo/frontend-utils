@@ -9,12 +9,9 @@ export class ApiFormPriceRange {
   readonly name: string;
   cleanedData?: [number | null, number | null];
 
-  constructor(
-    name: string,
-    cleanedData?: [number | null, number | null]
-  ) {
+  constructor(name: string, cleanedData?: URLSearchParams) {
     this.name = name;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {

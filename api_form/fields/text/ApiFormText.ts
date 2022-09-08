@@ -9,12 +9,9 @@ export class ApiFormText {
   readonly name: string;
   cleanedData?: string;
 
-  constructor(
-    name: string,
-    cleanedData?: string
-  ) {
+  constructor(name: string, cleanedData?: URLSearchParams) {
     this.name = name;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {
@@ -35,5 +32,4 @@ export class ApiFormText {
     if (this.cleanedData != "") apiParams[this.name] = [this.cleanedData];
     return apiParams;
   }
-
 }

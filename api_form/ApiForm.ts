@@ -61,7 +61,7 @@ export class ApiForm {
   constructor(
     fieldsMetadata: ApiFormFieldMetadata[],
     endpoint: string,
-    initialData?: Record<string, any> | null
+    initialData?: URLSearchParams
   ) {
     this.endpoint = new URL(endpoint);
     this.fetchFunction = (input: string, init?: FetchJsonInit) =>
@@ -75,36 +75,36 @@ export class ApiForm {
             fieldMetadata.choices,
             fieldMetadata.multiple,
             fieldMetadata.required,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "pagination":
           this.fields["pagination"] = new ApiFormPagination(
-            initialData && initialData["pagination"]
+            initialData
           );
           break;
         case "text":
           this.fields[fieldMetadata.name] = new ApiFormText(
             fieldMetadata.name,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "date_range":
           this.fields[fieldMetadata.name] = new ApiFormDateRangePicker(
             fieldMetadata.name,
             fieldMetadata.required,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "submit":
           this.fields["submit"] = new ApiFormSubmit(
-            initialData && initialData["submit"]
+            initialData
           );
           break;
         case "remove":
           this.fields[fieldMetadata.name] = new ApiFormRemoveListField(
             fieldMetadata.name,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "slider":
@@ -113,13 +113,13 @@ export class ApiForm {
             fieldMetadata.choices,
             fieldMetadata.step,
             fieldMetadata.unit,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "price_range":
           this.fields[fieldMetadata.name] = new ApiFormPriceRange(
             fieldMetadata.name,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
         case "tree":
@@ -128,7 +128,7 @@ export class ApiForm {
             fieldMetadata.choices,
             fieldMetadata.multiple,
             fieldMetadata.required,
-            initialData && initialData[fieldMetadata.name]
+            initialData
           );
           break;
       }

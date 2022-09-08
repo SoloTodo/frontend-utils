@@ -25,19 +25,19 @@ export class ApiFormSelect {
     choices: ApiFormSelectChoice[],
     multiple?: boolean,
     required?: boolean,
-    cleanedData?: ApiFormSelectChoice[]
+    cleanedData?: URLSearchParams
   ) {
     this.name = name;
     this.choices = choices;
     this.multiple = multiple || false;
     this.required = required || false;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {
     let name = this.name;
-    if (name.endsWith('_min')) name = name.replace('_min', '_start')
-    if (name.endsWith('_max')) name = name.replace('_max', '_end')
+    if (name.endsWith("_min")) name = name.replace("_min", "_start");
+    if (name.endsWith("_max")) name = name.replace("_max", "_end");
     this.cleanedData = this.cleanData(query.getAll(name));
   }
 

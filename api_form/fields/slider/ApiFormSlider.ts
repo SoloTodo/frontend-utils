@@ -39,13 +39,13 @@ export class ApiFormSlider {
     choices: ApiFormSliderChoice[],
     step: string | null,
     unit: string | null,
-    cleanedData?: [number | null, number | null]
+    cleanedData?: URLSearchParams
   ) {
     this.name = name;
     this.choices = choices;
     this.step = step;
     this.unit = unit;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {

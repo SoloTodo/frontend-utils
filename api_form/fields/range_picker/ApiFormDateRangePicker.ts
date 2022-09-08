@@ -12,14 +12,10 @@ export class ApiFormDateRangePicker {
   readonly required: boolean;
   cleanedData?: [Date | null, Date | null];
 
-  constructor(
-    name: string,
-    required?: boolean,
-    cleanedData?: [Date | null, Date | null]
-  ) {
+  constructor(name: string, required?: boolean, cleanedData?: URLSearchParams) {
     this.name = name;
     this.required = required || false;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {
@@ -33,12 +29,14 @@ export class ApiFormDateRangePicker {
       ? set(new Date(), { hours: 0, minutes: 0, seconds: 0 })
       : null;
 
-    let valueAfter = after && isValidDate(new Date(after))
-      ? set(new Date(after), { hours: 0, minutes: 0, seconds: 0 })
-      : past30;
-    let valueBefore = before && isValidDate(new Date(before))
-      ? set(new Date(before), { hours: 0, minutes: 0, seconds: 0 })
-      : today;
+    let valueAfter =
+      after && isValidDate(new Date(after))
+        ? set(new Date(after), { hours: 0, minutes: 0, seconds: 0 })
+        : past30;
+    let valueBefore =
+      before && isValidDate(new Date(before))
+        ? set(new Date(before), { hours: 0, minutes: 0, seconds: 0 })
+        : today;
 
     if (
       valueAfter !== null &&

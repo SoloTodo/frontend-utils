@@ -9,9 +9,9 @@ export class ApiFormRemoveListField {
   readonly name: string;
   cleanedData?: string[];
 
-  constructor(name: string, label: string, cleanedData?: string[]) {
+  constructor(name: string, cleanedData?: URLSearchParams) {
     this.name = name;
-    this.cleanedData = cleanedData;
+    cleanedData && this.loadData(cleanedData);
   }
 
   loadData(query: URLSearchParams) {
