@@ -79,9 +79,7 @@ export class ApiForm {
           );
           break;
         case "pagination":
-          this.fields["pagination"] = new ApiFormPagination(
-            initialData
-          );
+          this.fields["pagination"] = new ApiFormPagination(initialData);
           break;
         case "text":
           this.fields[fieldMetadata.name] = new ApiFormText(
@@ -97,9 +95,7 @@ export class ApiForm {
           );
           break;
         case "submit":
-          this.fields["submit"] = new ApiFormSubmit(
-            initialData
-          );
+          this.fields["submit"] = new ApiFormSubmit(initialData);
           break;
         case "remove":
           this.fields[fieldMetadata.name] = new ApiFormRemoveListField(
@@ -149,7 +145,7 @@ export class ApiForm {
     }
   }
 
-  submit() {
+  submit(signal: AbortSignal) {
     if (!this.isValid()) {
       throw Error("Form must be valid in order to be submitted");
     }
@@ -170,7 +166,7 @@ export class ApiForm {
     const querySearch = querySearchParams.toString();
     const queryUrl = new URL(this.endpoint.href);
     queryUrl.search = "?" + querySearch;
-    return this.fetchFunction(queryUrl.href);
+    return this.fetchFunction(queryUrl.href, { signal: signal });
   }
 
   isValid(): boolean {

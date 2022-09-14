@@ -50,21 +50,30 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
   };
 
   useEffect(() => {
+    const myAbortController = new AbortController();
+
     form.initialize();
     if (notInitialRender.current) {
       const parseUrl = queryString.parseUrl(router.asPath);
       if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
         setIsLoading(true);
-        form.submit().then((results) => {
-          setCurrentResult(results);
-          props.onResultsChange && props.onResultsChange(results);
-          setIsLoading(false);
-        });
+        form
+          .submit(myAbortController.signal)
+          .then((results) => {
+            setCurrentResult(results);
+            props.onResultsChange && props.onResultsChange(results);
+            setIsLoading(false);
+          })
+          .catch((_) => {});
         if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
       }
     } else {
       notInitialRender.current = true;
     }
+
+    return () => {
+      myAbortController.abort();
+    };
   }, [router.asPath]);
 
   return (
