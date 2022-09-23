@@ -74,6 +74,6 @@ export const apiSettings = {
     usdCurrencyId: 4,
     clpCurrencyId: 1,
     mobileNetworkOperatorId: 3,
-    backendUrl: 'http://localhost:8000/',
+    backendUrl: 'https://backend.solotodo.com/',
     solotodoUrl: 'https://www.solotodo.cl/'
 };
