@@ -66,13 +66,15 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
           })
           .catch((_) => {});
         if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
+      } else {
+        setCurrentResult([]);
       }
     } else {
       notInitialRender.current = true;
     }
 
     return () => {
-      myAbortController.abort();
+      !props.requiresSubmit && myAbortController.abort();
     };
   }, [router.asPath]);
 
