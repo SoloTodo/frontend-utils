@@ -26,14 +26,14 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useMemo(() => {
-    notInitialRender.current = !props.initialState;
+    notInitialRender.current = !props.initialState || notInitialRender.current;
     props.initialState && setCurrentResult(props.initialState.initialResult);
     return new ApiForm(
       props.fieldsMetadata,
       props.endpoint,
       props.initialState && props.initialState.initialData
     );
-  }, []);
+  }, [props.endpoint]);
 
   const updateUrl = (newUrlParams: Record<string, string[]>) => {
     const currentQuery = router.query;
