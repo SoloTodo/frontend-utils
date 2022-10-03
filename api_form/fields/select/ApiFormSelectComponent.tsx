@@ -192,7 +192,7 @@ export default function ApiFormSelectComponent(
               ))}
             </Box>
           ) : (
-            choices.filter((c) => c.value === selected)[0].label
+            choices.find((c) => c.value === selected)?.label
           )
         }
         onChange={(evt) => handleChangeSelect(evt.target.value)}
