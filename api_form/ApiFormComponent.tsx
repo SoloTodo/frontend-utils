@@ -33,7 +33,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
       props.endpoint,
       props.initialState && props.initialState.initialData
     );
-  }, [props.endpoint]);
+  }, []);
 
   const updateUrl = (newUrlParams: Record<string, string[]>) => {
     const currentQuery = router.query;
@@ -51,7 +51,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
 
   useEffect(() => {
     const myAbortController = new AbortController();
-
+    form.setEndpoint(props.endpoint);
     form.initialize();
     if (notInitialRender.current) {
       const parseUrl = queryString.parseUrl(router.asPath);
@@ -76,7 +76,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
     return () => {
       !props.requiresSubmit && myAbortController.abort();
     };
-  }, [router.asPath]);
+  }, [router.asPath, props.endpoint]);
 
   return (
     <ApiFormProvider

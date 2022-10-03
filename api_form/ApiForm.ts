@@ -176,4 +176,8 @@ export class ApiForm {
   getField(name: string): ApiFormField {
     return this.fields[name];
   }
+
+  setEndpoint(newEndpoint: string) {
+    this.endpoint = new URL(newEndpoint);
+  }
 }
