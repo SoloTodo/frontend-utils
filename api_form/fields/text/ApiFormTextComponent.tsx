@@ -51,6 +51,7 @@ export default function ApiFormTextComponent({
       onKeyPress={(e) => e.key === "Enter" && handleChange()}
       onBlur={handleChange}
       type={inputType}
+      size="small"
     />
   );
 }

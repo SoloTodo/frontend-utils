@@ -166,7 +166,7 @@ export default function ApiFormSelectComponent(
   };
 
   return isMobile || props.selectOnly ? (
-    <FormControl fullWidth>
+    <FormControl fullWidth size="small">
       <InputLabel id="multiple-name-label">{props.label}</InputLabel>
       <Select
         labelId="multiple-name-label"
@@ -220,6 +220,7 @@ export default function ApiFormSelectComponent(
       disableClearable={field.required}
       loading={context.isLoading}
       isOptionEqualToValue={isOptionEqualToValue}
+      size="small"
     />
   );
 }
