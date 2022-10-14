@@ -15,7 +15,7 @@ export type Product = {
   part_number: string;
   picture_url: string;
   slug: string;
-  specs: Record<string, string | number>;
+  specs: Record<string, string | number | string[]>;
 };
 
 export type Website = {
