@@ -16,6 +16,13 @@ export type CellPlan = {
   url: string;
 };
 
+export type BestCoupon = {
+  amount: string;
+  amount_type: 1 | 2;
+  amount_type_text: string;
+  code: string;
+}
+
 export type Entity = {
   active_registry?: {
     id: number;
@@ -49,6 +56,7 @@ export type Entity = {
   sku?: string;
   store: string;
   url: string;
+  best_coupon: BestCoupon | null;
 };
 
 export type StaffInfo = {
