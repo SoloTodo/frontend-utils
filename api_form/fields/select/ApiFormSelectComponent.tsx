@@ -27,7 +27,7 @@ type DocCount = {
 };
 
 export const choicesYesNo = [
-  { label: "None", value: "" },
+  { label: "Cualquiera", value: "" },
   { label: "Si", value: 1 },
   { label: "No", value: 0 },
 ];
