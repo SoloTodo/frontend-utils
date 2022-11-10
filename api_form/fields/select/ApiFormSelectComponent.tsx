@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import {
   Autocomplete,
   Box,
@@ -27,6 +27,7 @@ type DocCount = {
 };
 
 export const choicesYesNo = [
+  { label: "None", value: "" },
   { label: "Si", value: 1 },
   { label: "No", value: 0 },
 ];
@@ -156,7 +157,9 @@ export default function ApiFormSelectComponent(
   const handleChangeSelect = (
     selected: string | number | (string | number)[]
   ) => {
-    if (typeof selected === "string" || typeof selected === "number") {
+    if (selected === "") {
+      handleChange(null);
+    } else if (typeof selected === "string" || typeof selected === "number") {
       const selectedChoices = choices.filter((c) => c.value === selected);
       handleChange(selectedChoices);
     } else {
