@@ -100,6 +100,7 @@ export default function ApiFormSelectComponent(
           (c: DocCount) => c.id === a.value
         );
         if (choiceWithDoc.length > 0) {
+          docCountZero += choiceWithDoc[0].doc_count;
           acc.push({
             value: a.value,
             label: `${a.label} (${
@@ -111,7 +112,6 @@ export default function ApiFormSelectComponent(
             })`,
           });
           docCountTotal -= choiceWithDoc[0].doc_count;
-          docCountZero += choiceWithDoc[0].doc_count;
         }
         return acc;
       },
