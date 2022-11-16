@@ -61,7 +61,7 @@ export default function ApiFormSliderComponent({
     let aggsCount = 0;
     aggsValues = context.currentResult.aggs[field.name];
     choices = field.choices.map((c, idx) => {
-      const doc = aggsValues.filter((a) => a.id == c.value);
+      const doc = aggsValues.filter((a) => a.id === c.value);
       if (doc.length !== 0) aggsCount += doc[0].doc_count;
       return {
         index: idx,
@@ -152,9 +152,10 @@ export default function ApiFormSliderComponent({
     const infIdx = choices.findIndex(
       (choice) => choice.value === cleanedData[0]
     );
-    const inf = infIdx > 0 ? choices[infIdx - 1] : minChoice;
+    const inf = infIdx > 0 ? choices[infIdx] : minChoice;
+    const infCount = infIdx > 0 ? choices[infIdx - 1] : { count: 0 };
 
-    const docCountDif = Number(sup.count) - Number(inf.count);
+    const docCountDif = Number(sup.count) - Number(infCount.count);
     return `${inf.label} - ${sup.label} ${unit} (${docCountDif} resultados)`;
   };
 
