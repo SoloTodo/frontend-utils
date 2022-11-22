@@ -45,7 +45,9 @@ export const apiSettings = {
         brand_comparisons: endpoint + 'brand_comparisons/',
         keyword_searches: endpoint + 'keyword_searches/',
         keyword_search_updates: endpoint + 'keyword_search_updates/',
-        keyword_search_entity_positions: endpoint + 'keyword_search_entity_positions/'
+        keyword_search_entity_positions: endpoint + 'keyword_search_entity_positions/',
+        metamodel_meta_models: endpoint + 'metamodels/meta_models/',
+        metamodel_instance_models: endpoint + 'metamodels/instance_models/',
     },
     ownUserUrl: endpoint + 'users/me/',
     linioStoreId: 76,
