@@ -35,4 +35,5 @@ export type InstanceMetaModel = {
   unicode_representation: string;
   unicode_value: string;
   url: string;
+  fields?: InstanceMetaField[];
 };
