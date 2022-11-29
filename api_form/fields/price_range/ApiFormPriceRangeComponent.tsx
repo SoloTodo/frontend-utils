@@ -161,7 +161,7 @@ export default function ApiFormPriceRangeComponent({
   return (
     <Stack direction="column">
       <Typography>{label}</Typography>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "90%", alignSelf: "center" }}>
         <Slider
           value={cleanedData}
           min={0}

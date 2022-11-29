@@ -4,6 +4,8 @@ import {
   Stack,
   Typography,
   CircularProgress,
+  tooltipClasses,
+  sliderClasses,
 } from "@mui/material";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import ApiFormContext from "../../ApiFormContext";
@@ -156,7 +158,12 @@ export default function ApiFormSliderComponent({
     const infCount = infIdx > 0 ? choices[infIdx - 1] : { count: 0 };
 
     const docCountDif = Number(sup.count) - Number(infCount.count);
-    return `${inf.label} - ${sup.label} ${unit} (${docCountDif} resultados)`;
+    return (
+      <Stack textAlign="center">
+        <Typography variant="body2">{`${inf.label} - ${sup.label} ${unit}`}</Typography>
+        <Typography variant="body2">{`(${docCountDif} resultados)`}</Typography>
+      </Stack>
+    );
   };
 
   let sliderValues = [0, 0];
@@ -179,7 +186,7 @@ export default function ApiFormSliderComponent({
   return (
     <Stack direction="column">
       <Typography>{label}</Typography>
-      <Box sx={{ width: "100%" }}>
+      <Box sx={{ width: "90%", alignSelf: "center" }}>
         <Slider
           value={sliderValues}
           marks={
