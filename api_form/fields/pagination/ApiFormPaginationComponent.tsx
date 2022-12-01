@@ -2,8 +2,10 @@ import { useContext } from "react";
 import { TablePagination } from "@mui/material";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPagination } from "./ApiFormPagination";
+import useResponsive from "src/hooks/useResponsive";
 
 export default function ApiFormPaginationComponent() {
+  const isMoblie = useResponsive("down", "sm");
   const context = useContext(ApiFormContext);
   const data = context.currentResult;
   const field = context.getField("pagination") as ApiFormPagination | undefined;
@@ -35,12 +37,22 @@ export default function ApiFormPaginationComponent() {
       page={page && data ? Number(page) - 1 : 0}
       onPageChange={(_e, v) => handleChange((v + 1).toString(), "page")}
       onRowsPerPageChange={(e) => handleChange(e.target.value, "page_size")}
-      labelRowsPerPage="Items por pág."
+      labelRowsPerPage={isMoblie ? "" : "Items por pág."}
       labelDisplayedRows={({ from, to, count }) =>
-        `${from}–${to} de ${count !== -1 ? count : `más que ${to}`}`
+        isMoblie
+          ? `${from}–${to}`
+          : `${from}–${to} de ${count !== -1 ? count : `más que ${to}`}`
       }
       showFirstButton
       showLastButton
+      sx={{
+        ".MuiTablePagination-toolbar": {
+          padding: 0,
+        },
+        ".MuiTablePagination-actions": {
+          marginLeft: { xs: 0.5, sm: 3 },
+        },
+      }}
     />
   );
 }
