@@ -48,6 +48,7 @@ export const apiSettings = {
     keyword_search_entity_positions:
       endpoint + "keyword_search_entity_positions/",
     metamodel_meta_models: endpoint + "metamodels/meta_models/",
+    metamodel_meta_fields: endpoint + "metamodels/meta_fields/",
     metamodel_instance_models: endpoint + "metamodels/instance_models/",
   },
   ownUserUrl: endpoint + "users/me/",
