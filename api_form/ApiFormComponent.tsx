@@ -56,8 +56,8 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
     form.setEndpoint(props.endpoint);
     form.initialize();
     if (
-      props.initialState &&
-      props.initialState.initialResult !== currentResult
+      !props.initialState ||
+      (props.initialState && props.initialState.initialResult !== currentResult)
     ) {
       const parseUrl = queryString.parseUrl(router.asPath);
       if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
