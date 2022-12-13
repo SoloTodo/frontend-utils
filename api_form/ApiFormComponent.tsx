@@ -1,5 +1,5 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import React, { ReactNode, useEffect, useMemo, useRef, useState } from "react";
+import { ReactNode, useEffect, useMemo, useState } from "react";
 import { ApiForm, ApiFormFieldMetadata } from "./ApiForm";
 import { ApiFormProvider } from "./ApiFormContext";
 import { useRouter } from "next/router";
@@ -19,14 +19,12 @@ type ApiFormComponentProps = {
 
 export default function ApiFormComponent(props: ApiFormComponentProps) {
   const router = useRouter();
-  const notInitialRender = useRef(!props.initialState);
   const [currentResult, setCurrentResult] = useState(
     props.initialState ? props.initialState.initialResult : null
   );
   const [isLoading, setIsLoading] = useState(false);
 
   const form = useMemo(() => {
-    notInitialRender.current = !props.initialState || notInitialRender.current;
     props.onResultsChange &&
       !props.requiresSubmit &&
       props.onResultsChange(props.initialState?.initialResult);
@@ -56,7 +54,10 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
     const myAbortController = new AbortController();
     form.setEndpoint(props.endpoint);
     form.initialize();
-    if (notInitialRender.current) {
+    if (
+      props.initialState &&
+      props.initialState.initialResult !== currentResult
+    ) {
       const parseUrl = queryString.parseUrl(router.asPath);
       if (!props.requiresSubmit || submitReady(parseUrl.query.submit)) {
         setIsLoading(true);
@@ -72,8 +73,6 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
       } else {
         setCurrentResult([]);
       }
-    } else {
-      notInitialRender.current = true;
     }
 
     return () => {
