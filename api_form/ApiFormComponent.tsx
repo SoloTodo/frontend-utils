@@ -27,6 +27,7 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
   const form = useMemo(() => {
     props.onResultsChange &&
       !props.requiresSubmit &&
+      typeof window !== "undefined" &&
       props.onResultsChange(props.initialState?.initialResult);
     props.initialState && setCurrentResult(props.initialState.initialResult);
     return new ApiForm(
