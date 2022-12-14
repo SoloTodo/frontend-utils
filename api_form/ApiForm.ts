@@ -145,7 +145,7 @@ export class ApiForm {
     }
   }
 
-  submit(signal: AbortSignal) {
+  submit(signal?: AbortSignal) {
     if (!this.isValid()) {
       throw Error("Form must be valid in order to be submitted");
     }
