@@ -48,7 +48,7 @@ export default function ApiFormTextComponent({
       style={{ width: "100%" }}
       value={value}
       onChange={(evt) => onChange(evt.target.value)}
-      onKeyPress={(e) => e.key === "Enter" && handleChange()}
+      onKeyDown={(e) => e.key === "Enter" && handleChange()}
       onBlur={handleChange}
       type={inputType}
       size="small"

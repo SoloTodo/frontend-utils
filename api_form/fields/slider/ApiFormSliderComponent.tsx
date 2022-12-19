@@ -147,7 +147,7 @@ export default function ApiFormSliderComponent({
     });
   };
 
-  const valueLabelFormat = (value: number) => {
+  const valueLabelFormat = () => {
     const unit = field.unit !== null ? field.unit : "";
     let sup = choices.find((choice) => choice.value === cleanedData[1]);
     if (typeof sup === "undefined") sup = maxChoice;
