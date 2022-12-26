@@ -7,10 +7,12 @@ export default function ApiFormTextComponent({
   name,
   label,
   inputType,
+  withVariant,
 }: {
   name: string;
   label: string;
   inputType?: HTMLInputTypeAttribute;
+  withVariant?: boolean;
 }) {
   const context = useContext(ApiFormContext);
   const field = context.getField(name) as ApiFormText | undefined;
@@ -28,7 +30,7 @@ export default function ApiFormTextComponent({
 
   const onChange = (value: string) => {
     setValue(value);
-  }
+  };
 
   const handleChange = () => {
     if (value !== field.cleanedData) {
@@ -44,7 +46,7 @@ export default function ApiFormTextComponent({
     <TextField
       id="outlined-basic"
       label={label}
-      variant="outlined"
+      variant={withVariant ? "standard" : "outlined"}
       style={{ width: "100%" }}
       value={value}
       onChange={(evt) => onChange(evt.target.value)}
