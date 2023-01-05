@@ -1,7 +1,6 @@
 import { Country, Currency, StoreType } from "./types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from "src/store/store";
-import { HYDRATE } from "next-redux-wrapper";
+import { RootState } from "../redux";
 import { Category, Store } from "src/frontend-utils/types/store";
 import { apiSettings } from "src/frontend-utils/settings";
 
@@ -23,14 +22,6 @@ const apiResourceObjectsSlice = createSlice({
         newState[apiResourceObject.url] = apiResourceObject;
       }
       return newState;
-    },
-  },
-  extraReducers: {
-    [HYDRATE]: (state, action) => {
-      return {
-        ...state,
-        ...action.payload.apiResourceObjects,
-      };
     },
   },
 });

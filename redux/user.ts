@@ -1,10 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-// import { ReactUtilsState } from "./redux";
-import { RootState } from "src/store/store"; 
-import { HYDRATE } from "next-redux-wrapper";
+import { RootState } from "./redux";
 
 import { UserState } from "../types/user";
-
 
 // Slices
 // ----------------------------------------------------------------------
@@ -12,25 +9,17 @@ import { UserState } from "../types/user";
 const initialState: UserState = null as UserState;
 
 const userSlice = createSlice({
-    name: 'user',
-    initialState,
-    reducers: {
-        setUser: (_state, action: PayloadAction<UserState>) => {
-            return action.payload
-        }
+  name: "user",
+  initialState,
+  reducers: {
+    setUser: (_state, action: PayloadAction<UserState>) => {
+      return action.payload;
     },
-    extraReducers: {
-        [HYDRATE]: (state, action) => {
-            return action.payload.user || state ? {
-                ...state,
-                ...action.payload.user,
-            } : null;
-        },
-    },
+  },
 });
 
 export default userSlice;
 
 export function useUser(state: RootState) {
-    return state.user
+  return state.user;
 }

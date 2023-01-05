@@ -3,9 +3,11 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
+import { MyNextPageContext } from "../redux/with-redux-store";
 
 type GetServerSidePropsContextOrNull =
   | GetServerSidePropsContext
+  | MyNextPageContext
   | null
   | undefined;
 
@@ -171,3 +173,10 @@ export function fetchAuth(
     return fetchJson(input, init);
   }
 }
+
+// A nice helper to tell us if we're on the server
+export const isServer = !(
+  typeof window !== "undefined" &&
+  window.document &&
+  window.document.createElement
+);
