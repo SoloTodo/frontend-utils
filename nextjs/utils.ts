@@ -2,12 +2,13 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
-import {NextPageContext} from "next/types";
+import {GetServerSidePropsContext, NextPageContext} from "next/types";
 
 type NextPageContextOrNull =
   NextPageContext
-  | null
-  | undefined;
+    | GetServerSidePropsContext
+    | null
+    | undefined;
 
 export function getAuthTokens(ctx: NextPageContextOrNull) {
   try {
