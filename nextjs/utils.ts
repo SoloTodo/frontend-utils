@@ -1,17 +1,15 @@
-import { GetServerSidePropsContext } from "next";
 import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
 import {NextPageContext} from "next/types";
 
-type GetServerSidePropsContextOrNull =
-  | GetServerSidePropsContext
-  | NextPageContext
+type NextPageContextOrNull =
+  NextPageContext
   | null
   | undefined;
 
-export function getAuthTokens(ctx: GetServerSidePropsContextOrNull) {
+export function getAuthTokens(ctx: NextPageContextOrNull) {
   try {
     const tokens = JSON.parse(parseCookies(ctx)["authTokens"]);
 
@@ -30,7 +28,7 @@ type AuthTokensType = {
 };
 
 export function saveAuthTokens(
-  context: GetServerSidePropsContextOrNull,
+  context: NextPageContextOrNull,
   authTokens: AuthTokensType
 ) {
   const decodedRefreshToken = JSON.parse(
@@ -60,7 +58,7 @@ export function saveAuthTokens(
   );
 }
 
-export function deleteAuthTokens(context: GetServerSidePropsContextOrNull) {
+export function deleteAuthTokens(context: NextPageContextOrNull) {
   const cookieParameters = {
     path: "/",
     domain: undefined as string | undefined,
@@ -79,7 +77,7 @@ export function deleteAuthTokens(context: GetServerSidePropsContextOrNull) {
 }
 
 export async function jwtFetch(
-  context: GetServerSidePropsContextOrNull,
+  context: NextPageContextOrNull,
   input: string,
   init?: FetchJsonInit
 ) {
@@ -144,11 +142,11 @@ export async function jwtFetch(
   return await fetchJson(input, requestInit);
 }
 
-export const getStore = async (context: GetServerSidePropsContext) => {
+export const getStore = async (context: NextPageContext) => {
   try {
     const store = await jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.stores}${context.params?.id}`
+      `${apiSettings.apiResourceEndpoints.stores}${context.query['id']}`
     );
     return {
       props: {
@@ -163,7 +161,7 @@ export const getStore = async (context: GetServerSidePropsContext) => {
 };
 
 export function fetchAuth(
-  context: GetServerSidePropsContextOrNull,
+  context: NextPageContextOrNull,
   input: string,
   init?: FetchJsonInit
 ) {
