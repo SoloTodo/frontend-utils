@@ -1,4 +1,3 @@
-import { GetServerSidePropsContext } from "next";
 import {
   ApiFormSelect,
   ApiFormSelectProps,
@@ -31,6 +30,7 @@ import {
   ApiFormPriceRangeProps,
 } from "./fields/price_range/ApiFormPriceRange";
 import { ApiFormTree, ApiFormTreeProps } from "./fields/tree/ApiFormTree";
+import {NextPageContext} from "next/types";
 
 export type ApiFormFieldMetadata =
   | ApiFormSelectProps
@@ -131,14 +131,22 @@ export class ApiForm {
     }
   }
 
-  initialize(context?: GetServerSidePropsContext) {
+  initialize(context?: NextPageContext) {
     this.fetchFunction = (input: string, init?: FetchJsonInit) =>
       fetchAuth(context, input, init);
 
-    const currentUrl =
-      context && context.req
-        ? new URL(context.req.url || "", `https://${context.req.headers.host}`)
-        : new URL(window.location.href);
+    let currentUrl;
+
+    if (context) {
+      if (context.req) {
+        currentUrl = new URL(context.req.url || "", `https://${context.req.headers.host}`)
+      } else {
+        currentUrl = new URL(`https://www.solotodo.cl${context.asPath}`)
+      }
+    } else {
+      currentUrl = new URL(window.location.href)
+    }
+
     const query = currentUrl.searchParams;
     for (const field of Object.values(this.fields)) {
       field.loadData(query);

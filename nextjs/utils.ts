@@ -3,11 +3,11 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
-import { MyNextPageContext } from "../redux/with-redux-store";
+import {NextPageContext} from "next/types";
 
 type GetServerSidePropsContextOrNull =
   | GetServerSidePropsContext
-  | MyNextPageContext
+  | NextPageContext
   | null
   | undefined;
 
