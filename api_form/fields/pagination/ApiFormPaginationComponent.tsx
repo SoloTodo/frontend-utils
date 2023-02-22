@@ -4,7 +4,11 @@ import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPagination } from "./ApiFormPagination";
 import useResponsive from "src/hooks/useResponsive";
 
-export default function ApiFormPaginationComponent() {
+export default function ApiFormPaginationComponent({
+  rowsPerPage,
+}: {
+  rowsPerPage?: number[];
+}) {
   const isMoblie = useResponsive("down", "sm");
   const context = useContext(ApiFormContext);
   const data = context.currentResult;
@@ -29,7 +33,7 @@ export default function ApiFormPaginationComponent() {
 
   return (
     <TablePagination
-      rowsPerPageOptions={[5, 10, 20, 50, 100, 200]}
+      rowsPerPageOptions={rowsPerPage ?? [5, 10, 20, 50, 100, 200]}
       component="div"
       colSpan={3}
       count={data ? data.count : 0}
