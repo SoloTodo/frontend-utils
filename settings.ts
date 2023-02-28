@@ -73,6 +73,7 @@ export const apiSettings = {
   reuseStoreId: 2471,
   fensaStoreId: 4616,
   tiendaOficialLgId: 3032,
+  easyId: 88,
   cellPhoneCategoryId: 6,
   technicalSpecificationsPurposeId: 1,
   categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
