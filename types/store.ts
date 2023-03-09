@@ -53,3 +53,32 @@ export type StoreScrapingOptions = {
   discover_urls_concurrency?: number;
   products_for_url_concurrency?: number;
 };
+
+type filter = {
+  choices: {
+    id: number;
+    name: string;
+    value: string | null;
+  }[];
+  continuous_range_step: string | null;
+  continuous_range_unit: string | null;
+  country: string | null;
+  id: number;
+  label: string;
+  name: string;
+  type: string;
+};
+
+export type CategorySpecsFormLayoutProps = {
+  category: string;
+  fieldsets: {
+    id: number;
+    label: string;
+    filters: filter[];
+  }[];
+  id: number;
+  name: string | null;
+  orders: any[];
+  url: string;
+  website: string;
+};
