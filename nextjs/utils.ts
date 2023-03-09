@@ -2,13 +2,13 @@ import { destroyCookie, parseCookies, setCookie } from "nookies";
 import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
-import {GetServerSidePropsContext, NextPageContext} from "next/types";
+import { GetServerSidePropsContext, NextPageContext } from "next/types";
 
 type NextPageContextOrNull =
-  NextPageContext
-    | GetServerSidePropsContext
-    | null
-    | undefined;
+  | NextPageContext
+  | GetServerSidePropsContext
+  | null
+  | undefined;
 
 export function getAuthTokens(ctx: NextPageContextOrNull) {
   try {
@@ -147,11 +147,40 @@ export const getStore = async (context: NextPageContext) => {
   try {
     const store = await jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.stores}${context.query['id']}`
+      `${apiSettings.apiResourceEndpoints.stores}${context.query["id"]}`
     );
     return {
       props: {
         store: store,
+      },
+    };
+  } catch {
+    return {
+      notFound: true,
+    };
+  }
+};
+
+export const getCategorySpecsFromLayout = async (context: NextPageContext) => {
+  let categorySpecsFormLayout = {};
+  try {
+    const response = await jwtFetch(
+      context,
+      `${apiSettings.apiResourceEndpoints.category_specs_form_layouts}?category=${context.query["id"]}`
+    );
+    categorySpecsFormLayout = response[0];
+    response.forEach((res: { website: string }) => {
+      if (res.website == `${apiSettings.apiResourceEndpoints.websites}1`)
+        categorySpecsFormLayout = res;
+    });
+    const brands = await jwtFetch(
+      context,
+      apiSettings.apiResourceEndpoints.brands
+    );
+    return {
+      props: {
+        categorySpecsFormLayout: categorySpecsFormLayout,
+        brands: brands,
       },
     };
   } catch {
