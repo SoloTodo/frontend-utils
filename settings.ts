@@ -43,6 +43,7 @@ export const apiSettings = {
     user_alerts: endpoint + "user_alerts/",
     product_lists: endpoint + "product_lists/",
     brand_comparisons: endpoint + "brand_comparisons/",
+    brand_comparisons_alerts: endpoint + "brand_comparison_alerts/",
     keyword_searches: endpoint + "keyword_searches/",
     keyword_search_updates: endpoint + "keyword_search_updates/",
     keyword_search_entity_positions:
