@@ -22,7 +22,7 @@ export type Update = {
 };
 
 export type WtbEntity = {
-  brand: string;
+  brand: Brand;
   category: string;
   creation_date: string;
   external_url: string;
