@@ -1,4 +1,4 @@
-import { InLineProduct } from "./entity";
+import { Entity, InLineProduct } from "./entity";
 import { Category } from "./store";
 import { User } from "./user";
 
@@ -33,4 +33,10 @@ export type BrandComparison = {
   stores: string[];
   url: string;
   user: User;
+};
+
+export type BrandRowData = {
+  entities: Entity[];
+  product: InLineProduct;
+  rowIds: number[];
 };
