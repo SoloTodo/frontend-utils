@@ -45,6 +45,7 @@ export const apiSettings = {
     brand_comparisons: endpoint + "brand_comparisons/",
     brand_comparisons_alerts: endpoint + "brand_comparison_alerts/",
     brand_comparisons_segments: endpoint + "brand_comparison_segments/",
+    brand_comparison_segment_rows: endpoint + "brand_comparison_segment_rows/",
     keyword_searches: endpoint + "keyword_searches/",
     keyword_search_updates: endpoint + "keyword_search_updates/",
     keyword_search_entity_positions:
