@@ -53,6 +53,7 @@ export const apiSettings = {
     metamodel_meta_models: endpoint + "metamodels/meta_models/",
     metamodel_meta_fields: endpoint + "metamodels/meta_fields/",
     metamodel_instance_models: endpoint + "metamodels/instance_models/",
+    store_subscriptions: endpoint + "store_subscriptions/",
   },
   ownUserUrl: endpoint + "users/me/",
   linioStoreId: 76,
