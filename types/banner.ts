@@ -78,3 +78,10 @@ export const statusCodes = {
   2: "Exitoso",
   3: "Error",
 };
+
+export type Participation = {
+  grouping_label: string;
+  participation_percentage: number;
+  participation_score: number;
+  position_avg: number;
+}
