@@ -30,7 +30,7 @@ import {
   ApiFormPriceRangeProps,
 } from "./fields/price_range/ApiFormPriceRange";
 import { ApiFormTree, ApiFormTreeProps } from "./fields/tree/ApiFormTree";
-import {NextPageContext} from "next/types";
+import { NextPageContext } from "next/types";
 
 export type ApiFormFieldMetadata =
   | ApiFormSelectProps
@@ -139,12 +139,15 @@ export class ApiForm {
 
     if (context) {
       if (context.req) {
-        currentUrl = new URL(context.req.url || "", `https://${context.req.headers.host}`)
+        currentUrl = new URL(
+          context.req.url || "",
+          `https://${context.req.headers.host}`
+        );
       } else {
-        currentUrl = new URL(`https://www.solotodo.cl${context.asPath}`)
+        currentUrl = new URL(`https://www.solotodo.cl${context.asPath}`);
       }
     } else {
-      currentUrl = new URL(window.location.href)
+      currentUrl = new URL(window.location.href);
     }
 
     const query = currentUrl.searchParams;
@@ -153,11 +156,7 @@ export class ApiForm {
     }
   }
 
-  submit(signal?: AbortSignal) {
-    if (!this.isValid()) {
-      throw Error("Form must be valid in order to be submitted");
-    }
-
+  getQueryUrl() {
     const endpointSearch = this.endpoint.searchParams.toString();
     const querySearchParams: URLSearchParams = new URLSearchParams(
       endpointSearch
@@ -174,6 +173,16 @@ export class ApiForm {
     const querySearch = querySearchParams.toString();
     const queryUrl = new URL(this.endpoint.href);
     queryUrl.search = "?" + querySearch;
+    return queryUrl;
+  }
+
+  submit(signal?: AbortSignal) {
+    if (!this.isValid()) {
+      throw Error("Form must be valid in order to be submitted");
+    }
+
+    const queryUrl = this.getQueryUrl();
+
     return this.fetchFunction(queryUrl.href, { signal: signal });
   }
 
