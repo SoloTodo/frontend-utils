@@ -69,7 +69,9 @@ export default function ApiFormComponent(props: ApiFormComponentProps) {
             props.onResultsChange && props.onResultsChange(results);
             setIsLoading(false);
           })
-          .catch((_) => {});
+          .catch((_) => {
+            setIsLoading(false);
+          });
         if (props.requiresSubmit) updateUrl({ ...parseUrl.query, submit: [] });
       } else {
         setCurrentResult([]);
