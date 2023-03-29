@@ -51,56 +51,66 @@ export default function ApiFormSliderComponent({
 
   if (
     context.currentResult === null ||
-    typeof field.cleanedData === "undefined" ||
-    typeof context.currentResult.aggs[field.name] === "undefined"
+    typeof field.cleanedData === "undefined"
   ) {
     return Loading(label, true);
   }
 
   let choices: ApiFormSliderChoice[] = [];
-  let aggsValues: { id: number; doc_count: number }[] = [];
-  if (field.step === null) {
-    let aggsCount = 0;
-    aggsValues = context.currentResult.aggs[field.name];
-    choices = field.choices.map((c, idx) => {
-      const doc = aggsValues.filter((a) => a.id === c.value);
-      if (doc.length !== 0) aggsCount += doc[0].doc_count;
-      return {
-        index: idx,
-        value: c.value,
-        label: c.label,
-        count: aggsCount,
-      };
-    });
+  if (
+    typeof context.currentResult.aggs === "undefined" ||
+    typeof context.currentResult.aggs[field.name] === "undefined"
+  ) {
+    choices = field.choices.map((c, idx) => ({
+      index: idx,
+      value: c.value,
+      label: c.label,
+    }));
   } else {
-    let lowLimit = 0;
-    let limit = 0;
-    const step = Number(field.step);
-
-    aggsValues = context.currentResult.aggs[field.name].sort(
-      (a: { id: number }, b: { id: number }) => a.id - b.id
-    );
-    if (aggsValues.length !== 0) {
-      limit = Math.round(aggsValues[aggsValues.length - 1].id / step);
-      lowLimit = Math.round(aggsValues[0].id / step);
-    }
-
-    for (let i = lowLimit; i <= limit; i++) {
-      const currentStep = Math.round(step * i * 1000) / 1000;
-      const docCount = aggsValues.filter((a) => a.id <= currentStep);
-      const count =
-        docCount.length !== 0
-          ? docCount.reduce(
-              (acc: number, a: { doc_count: number }) => acc + a.doc_count,
-              0
-            )
-          : 0;
-      choices.push({
-        index: currentStep,
-        value: currentStep,
-        label: currentStep.toString(),
-        count: count,
+    let aggsValues: { id: number; doc_count: number }[] = [];
+    if (field.step === null) {
+      let aggsCount = 0;
+      aggsValues = context.currentResult.aggs[field.name];
+      choices = field.choices.map((c, idx) => {
+        const doc = aggsValues.filter((a) => a.id === c.value);
+        if (doc.length !== 0) aggsCount += doc[0].doc_count;
+        return {
+          index: idx,
+          value: c.value,
+          label: c.label,
+          count: aggsCount,
+        };
       });
+    } else {
+      let lowLimit = 0;
+      let limit = 0;
+      const step = Number(field.step);
+
+      aggsValues = context.currentResult.aggs[field.name].sort(
+        (a: { id: number }, b: { id: number }) => a.id - b.id
+      );
+      if (aggsValues.length !== 0) {
+        limit = Math.round(aggsValues[aggsValues.length - 1].id / step);
+        lowLimit = Math.round(aggsValues[0].id / step);
+      }
+
+      for (let i = lowLimit; i <= limit; i++) {
+        const currentStep = Math.round(step * i * 1000) / 1000;
+        const docCount = aggsValues.filter((a) => a.id <= currentStep);
+        const count =
+          docCount.length !== 0
+            ? docCount.reduce(
+                (acc: number, a: { doc_count: number }) => acc + a.doc_count,
+                0
+              )
+            : 0;
+        choices.push({
+          index: currentStep,
+          value: currentStep,
+          label: currentStep.toString(),
+          count: count,
+        });
+      }
     }
   }
 
@@ -161,7 +171,9 @@ export default function ApiFormSliderComponent({
     return (
       <Stack textAlign="center">
         <Typography variant="body2">{`${inf.label} - ${sup.label} ${unit}`}</Typography>
-        <Typography variant="body2">{`(${docCountDif} resultados)`}</Typography>
+        {sup.count && (
+          <Typography variant="body2">{`(${docCountDif} resultados)`}</Typography>
+        )}
       </Stack>
     );
   };
