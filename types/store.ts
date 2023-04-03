@@ -8,6 +8,7 @@ export type Store = {
   storescraper_class: string;
   logo: string;
   permissions: string[];
+  preferred_payment_method?: string;
 };
 
 export const STATUS = {
