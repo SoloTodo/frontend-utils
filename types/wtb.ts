@@ -1,4 +1,5 @@
 import { InLineProduct } from "./entity";
+import { Category } from "./store";
 
 export type Brand = {
   id: number;
@@ -38,4 +39,5 @@ export type WtbEntity = {
   product: InLineProduct;
   section: string;
   url: string;
+  full_category: Category;
 };
