@@ -8,7 +8,7 @@ export type Product = {
   brand: string;
   category: string;
   creation_date: string;
-  creator: User;
+  creator?: User;
   instance_model_id: number;
   keywords: string;
   last_updated: string;
