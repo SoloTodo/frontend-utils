@@ -78,6 +78,7 @@ export const apiSettings = {
   fensaStoreId: 4616,
   tiendaOficialLgId: 3032,
   easyId: 88,
+  philipsStoreId: 5870,
   cellPhoneCategoryId: 6,
   technicalSpecificationsPurposeId: 1,
   categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
