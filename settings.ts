@@ -79,6 +79,7 @@ export const apiSettings = {
   tiendaOficialLgId: 3032,
   easyId: 88,
   philipsStoreId: 5870,
+  winpyStoreId: 45,
   cellPhoneCategoryId: 6,
   technicalSpecificationsPurposeId: 1,
   categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
