@@ -83,3 +83,10 @@ export type CategorySpecsFormLayoutProps = {
   url: string;
   website: string;
 };
+
+export type CategoryColumn = {
+  label: string,
+  es_field: string,
+  purpose: string,
+  country: string
+}
