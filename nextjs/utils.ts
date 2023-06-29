@@ -3,6 +3,7 @@ import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
 import { GetServerSidePropsContext, NextPageContext } from "next/types";
+import {CategoryColumn} from "../types/store";
 
 type NextPageContextOrNull =
   | NextPageContext
@@ -161,34 +162,35 @@ export const getStore = async (context: NextPageContext) => {
   }
 };
 
-export const getCategorySpecsFromLayout = async (context: NextPageContext) => {
-  let categorySpecsFormLayout = {};
+export const getCategorySpecsFromLayout = async (context: NextPageContext, websiteId: number) => {
+  let categorySpecsFormLayout = null;
   try {
     const response = await jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.category_specs_form_layouts}?category=${context.query["id"]}`
+      `${apiSettings.apiResourceEndpoints.category_specs_form_layouts}?category=${context.query["id"]}&website=${websiteId}`
     );
-    categorySpecsFormLayout = response[0];
-    response.forEach((res: { website: string }) => {
-      if (res.website == `${apiSettings.apiResourceEndpoints.websites}1`)
+    response.forEach((res: { website: string, name:string }) => {
+      if (res.name === null)
         categorySpecsFormLayout = res;
     });
-    const brands = await jwtFetch(
-      context,
-      apiSettings.apiResourceEndpoints.brands
-    );
-    return {
-      props: {
-        categorySpecsFormLayout: categorySpecsFormLayout,
-        brands: brands,
-      },
-    };
+    return categorySpecsFormLayout
   } catch {
-    return {
-      notFound: true,
-    };
+    return null
   }
 };
+
+
+export const getCategoryColumns = async (context: NextPageContext, categoryId: number, purposeId: number) : Promise<CategoryColumn[]|null>  => {
+  try {
+    return jwtFetch(
+      context,
+      `${apiSettings.apiResourceEndpoints.category_columns}?categories=${categoryId}&purposes=${purposeId}`
+    );
+  } catch {
+    return null
+  }
+}
+
 
 export function fetchAuth(
   context: NextPageContextOrNull,
