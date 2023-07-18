@@ -7,7 +7,7 @@ import {
   Stack,
   Typography,
 } from "@mui/material";
-import { Currency } from "src/frontend-utils/redux/api_resources/types";
+import { Currency } from "../../../redux/api_resources/types"
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPriceRange } from "./ApiFormPriceRange";
 // currency
