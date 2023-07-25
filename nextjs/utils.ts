@@ -12,17 +12,13 @@ type NextPageContextOrNull =
   | undefined;
 
 export function getAuthTokens(ctx: NextPageContextOrNull) {
-  try {
     const tokens = JSON.parse(parseCookies(ctx)["authTokens"]);
 
     if (!tokens.access || !tokens.refresh) {
-      throw new Error();
+      throw new InvalidTokenError("Missing or invalid JSON in authTokens cookie");
     }
 
     return tokens;
-  } catch (err) {
-    throw new InvalidTokenError("Missing or invalid JSON in authTokens cookie");
-  }
 }
 
 type AuthTokensType = {

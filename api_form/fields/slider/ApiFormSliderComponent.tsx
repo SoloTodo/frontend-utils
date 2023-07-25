@@ -3,9 +3,7 @@ import {
   Slider,
   Stack,
   Typography,
-  CircularProgress,
-  tooltipClasses,
-  sliderClasses,
+  CircularProgress
 } from "@mui/material";
 import { SyntheticEvent, useContext, useEffect, useState } from "react";
 import ApiFormContext from "../../ApiFormContext";
@@ -178,7 +176,7 @@ export default function ApiFormSliderComponent({
     );
   };
 
-  let sliderValues = [0, 0];
+  let sliderValues;
   if (field.step === null) {
     sliderValues = [
       cleanedData[0] !== null

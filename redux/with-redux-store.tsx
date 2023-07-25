@@ -3,7 +3,7 @@ import { isServer } from "../nextjs/utils";
 import reactUtilsStore from "./redux";
 import { NextComponentType, NextPageContext } from "next/types";
 import { AppContext } from "next/app";
-import { AnyAction, Store } from "@reduxjs/toolkit";
+import { Store } from "@reduxjs/toolkit";
 
 const __NEXT_REDUX_STORE__ = "__NEXT_REDUX_STORE__";
 
@@ -22,7 +22,7 @@ function getOrCreateStore(initialState?: any) {
 }
 
 export interface MyNextPageContext extends NextPageContext {
-  reduxStore: Store<any, AnyAction>;
+  reduxStore: Store;
 }
 
 export interface MyAppContext extends AppContext {

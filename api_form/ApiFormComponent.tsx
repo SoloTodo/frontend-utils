@@ -3,7 +3,7 @@ import { ReactNode, useEffect, useMemo, useState } from "react";
 import { ApiForm, ApiFormFieldMetadata } from "./ApiForm";
 import { ApiFormProvider } from "./ApiFormContext";
 import { useRouter } from "next/router";
-import * as queryString from "query-string";
+import queryString from "query-string";
 import { ApiFormInitialState } from "./types";
 import { submitReady } from "./fields/submit/ApiFormSubmit";
 
