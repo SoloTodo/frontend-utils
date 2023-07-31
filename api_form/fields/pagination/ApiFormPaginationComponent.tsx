@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { TablePagination } from "@mui/material";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPagination } from "./ApiFormPagination";
-import {useResponsive} from "@/src/frontend-utils/hooks";
+import {useResponsive} from "../../../hooks";
 
 export default function ApiFormPaginationComponent({
   rowsPerPage,
