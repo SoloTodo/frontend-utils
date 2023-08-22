@@ -2,8 +2,8 @@ import { InLineProduct } from "./entity";
 import { User } from "./user";
 
 export type Rating = {
-  approval_date: string | null;
   creation_date: string;
+  last_updated: string;
   id: number;
   ip: string;
   product: InLineProduct;
@@ -16,4 +16,12 @@ export type Rating = {
   url: string;
   user: User;
   email_or_phone: string | null;
+  status: number;
 };
+
+export const RatingStatusDict = {
+  1: 'Pendiente',
+  2: 'Aprobado',
+  3: 'Rechazado',
+  4: 'En investigación'
+}
