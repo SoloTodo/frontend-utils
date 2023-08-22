@@ -19,7 +19,7 @@ export type Rating = {
   status: number;
 };
 
-export const RatingStatusDict = {
+export const RatingStatusDict:Record<number, string> = {
   1: 'Pendiente',
   2: 'Aprobado',
   3: 'Rechazado',
