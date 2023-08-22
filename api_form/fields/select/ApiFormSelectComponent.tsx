@@ -90,7 +90,7 @@ export default function ApiFormSelectComponent(
     typeof context.currentResult.aggs[strictName] !== "undefined"
   ) {
     let docCountTotal = context.currentResult.aggs[strictName].reduce(
-      (acc: number, a: DocCount) => (acc += a.doc_count),
+      (acc: number, a: DocCount) => (acc + a.doc_count),
       0
     );
     let docCountZero = 0;

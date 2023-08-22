@@ -80,6 +80,7 @@ export const apiSettings = {
   easyId: 88,
   philipsStoreId: 5870,
   winpyStoreId: 45,
+  asusStoreId: 2570,
   cellPhoneCategoryId: 6,
   technicalSpecificationsPurposeId: 1,
   categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",

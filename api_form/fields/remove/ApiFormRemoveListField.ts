@@ -15,8 +15,7 @@ export class ApiFormRemoveListField {
   }
 
   loadData(query: URLSearchParams) {
-    const value = query.getAll(this.name);
-    this.cleanedData = value;
+    this.cleanedData = query.getAll(this.name);
   }
 
   isValid() {

@@ -1,8 +1,8 @@
 import { Country, Currency, StoreType } from "./types";
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { RootState } from "../redux";
-import { Category, Store } from "src/frontend-utils/types/store";
-import { apiSettings } from "src/frontend-utils/settings";
+import { Category, Store } from "../../types/store";
+import { apiSettings } from "../../settings";
 
 export type ApiResourceObject = Currency | Country | StoreType | Category | Store;
 export type ApiResourceObjectRecord = Record<string, ApiResourceObject>;
