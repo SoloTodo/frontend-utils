@@ -77,3 +77,10 @@ export type EntityEvent = {
     old_value: { id: number; name: string } | null;
   }[];
 };
+
+export type EntitySecInfo = {
+  code: string,
+  sec_url: string,
+  brands: string,
+  models: string,
+}
