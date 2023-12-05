@@ -35,7 +35,7 @@ export type WtbEntity = {
   model_name: string;
   name: string;
   picture_url: string;
-  price: number | null;
+  price: string | null;
   product: InLineProduct;
   section: string;
   url: string;
