@@ -40,4 +40,5 @@ export type WtbEntity = {
   section: string;
   url: string;
   full_category: Category;
+  description: string;
 };
