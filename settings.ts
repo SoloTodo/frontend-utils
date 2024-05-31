@@ -83,6 +83,7 @@ export const apiSettings = {
     asusStoreId: 2570,
     dlPhoneId: 6695,
     gestionYEquiposId: 6662,
+    samsungStoreId: 223,
     cellPhoneCategoryId: 6,
     technicalSpecificationsPurposeId: 1,
     categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
