@@ -3,7 +3,7 @@ import { fetchJson, FetchJsonInit, InvalidTokenError } from "../network/utils";
 import atob from "atob";
 import { apiSettings } from "../settings";
 import { GetServerSidePropsContext, NextPageContext } from "next/types";
-import {CategoryColumn} from "../types/store";
+import { CategoryColumn } from "../types/store";
 
 type NextPageContextOrNull =
   | NextPageContext
@@ -12,13 +12,13 @@ type NextPageContextOrNull =
   | undefined;
 
 export function getAuthTokens(ctx: NextPageContextOrNull) {
-    const tokens = JSON.parse(parseCookies(ctx)["authTokens"]);
+  const tokens = JSON.parse(parseCookies(ctx)["authTokens"]);
 
-    if (!tokens.access || !tokens.refresh) {
-      throw new InvalidTokenError("Missing or invalid JSON in authTokens cookie");
-    }
+  if (!tokens.access || !tokens.refresh) {
+    throw new InvalidTokenError("Missing or invalid JSON in authTokens cookie");
+  }
 
-    return tokens;
+  return tokens;
 }
 
 type AuthTokensType = {
@@ -27,10 +27,10 @@ type AuthTokensType = {
 
 export function saveAuthTokens(
   context: NextPageContextOrNull,
-  authTokens: AuthTokensType
+  authTokens: AuthTokensType,
 ) {
   const decodedRefreshToken = JSON.parse(
-    atob(authTokens.refresh.split(".")[1])
+    atob(authTokens.refresh.split(".")[1]),
   );
 
   const cookieParameters = {
@@ -52,7 +52,7 @@ export function saveAuthTokens(
     context,
     "authTokens",
     JSON.stringify(authTokens),
-    cookieParameters
+    cookieParameters,
   );
 }
 
@@ -77,7 +77,7 @@ export function deleteAuthTokens(context: NextPageContextOrNull) {
 export async function jwtFetch(
   context: NextPageContextOrNull,
   input: string,
-  init?: FetchJsonInit
+  init?: FetchJsonInit,
 ) {
   let { access, refresh } = getAuthTokens(context);
 
@@ -144,7 +144,7 @@ export const getStore = async (context: NextPageContext) => {
   try {
     const store = await jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.stores}${context.query["id"]}`
+      `${apiSettings.apiResourceEndpoints.stores}${context.query["id"]}`,
     );
     return {
       props: {
@@ -158,40 +158,44 @@ export const getStore = async (context: NextPageContext) => {
   }
 };
 
-export const getCategorySpecsFromLayout = async (context: NextPageContext, websiteId: number) => {
-  let categorySpecsFormLayout = null;
+export const getCategorySpecsFromLayout = async (
+  context: NextPageContext,
+  websiteId: number,
+) => {
+  let categorySpecsFormLayout: { website: string; name: string } | null = null;
   try {
     const response = await jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.category_specs_form_layouts}?category=${context.query["id"]}&website=${websiteId}`
+      `${apiSettings.apiResourceEndpoints.category_specs_form_layouts}?category=${context.query["id"]}&website=${websiteId}`,
     );
-    response.forEach((res: { website: string, name:string }) => {
-      if (res.name === null)
-        categorySpecsFormLayout = res;
+    response.forEach((res: { website: string; name: string }) => {
+      if (res.name === null) categorySpecsFormLayout = res;
     });
-    return categorySpecsFormLayout
+    return categorySpecsFormLayout;
   } catch {
-    return null
+    return null;
   }
 };
 
-
-export const getCategoryColumns = async (context: NextPageContext, categoryId: number, purposeId: number) : Promise<CategoryColumn[]|null>  => {
+export const getCategoryColumns = async (
+  context: NextPageContext,
+  categoryId: number,
+  purposeId: number,
+): Promise<CategoryColumn[] | null> => {
   try {
     return jwtFetch(
       context,
-      `${apiSettings.apiResourceEndpoints.category_columns}?categories=${categoryId}&purposes=${purposeId}`
+      `${apiSettings.apiResourceEndpoints.category_columns}?categories=${categoryId}&purposes=${purposeId}`,
     );
   } catch {
-    return null
+    return null;
   }
-}
-
+};
 
 export function fetchAuth(
   context: NextPageContextOrNull,
   input: string,
-  init?: FetchJsonInit
+  init?: FetchJsonInit,
 ) {
   if (typeof parseCookies(context)["authTokens"] !== "undefined") {
     return jwtFetch(context, input, init);
