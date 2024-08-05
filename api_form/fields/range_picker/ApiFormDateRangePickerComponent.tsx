@@ -1,9 +1,9 @@
 import { useContext } from "react";
-import { DesktopDatePicker, LocalizationProvider } from "@mui/lab";
+import { DatePicker, LocalizationProvider } from "@mui/x-date-pickers";
 import { AdapterDateFns } from "@mui/x-date-pickers/AdapterDateFns";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormDateRangePicker } from "./ApiFormDateRangePicker";
-import { Stack, TextField, TextFieldProps } from "@mui/material";
+import { Stack } from "@mui/material";
 import { isValid, set } from "date-fns";
 
 export default function ApiFormDateRangePickerComponent({
@@ -43,22 +43,22 @@ export default function ApiFormDateRangePickerComponent({
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
       <Stack spacing={1} direction="row">
-        <DesktopDatePicker
+        <DatePicker
           label={`${label} desde`}
           value={cleanedData[0]}
           maxDate={cleanedData[1] || new Date()}
-          inputFormat="dd/MM/yyyy"
+          // inputFormat="dd/MM/yyyy"
           onChange={(newValue: Date | null) => handleChange(newValue, 0)}
-          renderInput={(params: TextFieldProps) => <TextField {...params} />}
+          // renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
-        <DesktopDatePicker
+        <DatePicker
           label="hasta"
           value={cleanedData[1]}
           minDate={cleanedData[0] || undefined}
           maxDate={new Date()}
-          inputFormat="dd/MM/yyyy"
+          // inputFormat="dd/MM/yyyy"
           onChange={(newValue: Date | null) => handleChange(newValue, 1)}
-          renderInput={(params: TextFieldProps) => <TextField {...params} />}
+          // renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
       </Stack>
     </LocalizationProvider>
