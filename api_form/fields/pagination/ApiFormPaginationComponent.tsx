@@ -2,7 +2,7 @@ import { useContext } from "react";
 import { TablePagination } from "@mui/material";
 import ApiFormContext from "../../ApiFormContext";
 import { ApiFormPagination } from "./ApiFormPagination";
-import {useResponsive} from "../../../hooks";
+import { useResponsive } from "../../../hooks";
 
 export default function ApiFormPaginationComponent({
   rowsPerPage,
@@ -18,8 +18,8 @@ export default function ApiFormPaginationComponent({
     throw `Invalid field name: pagination`;
   }
 
-  let page = null;
-  let page_size = null;
+  let page: number | null = null;
+  let page_size: number | null = null;
   if (typeof field.cleanedData !== "undefined") {
     page = field.cleanedData.page;
     page_size = field.cleanedData.page_size;
