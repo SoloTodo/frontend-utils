@@ -16,6 +16,7 @@ export type Product = {
   picture_url: string;
   slug: string;
   specs: Record<string, string | number | string[]>;
+  ai_description: string | null;
 };
 
 export type Website = {
