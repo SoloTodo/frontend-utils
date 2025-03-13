@@ -1,3 +1,5 @@
+import { User } from "./user";
+
 export type InLineProduct = {
   id: number;
   name: string;
@@ -62,9 +64,9 @@ export type Entity = {
 export type StaffInfo = {
   discovery_url: string;
   last_association: string | null;
-  last_association_user: string | null;
+  last_association_user: User | null;
   last_staff_access: string | null;
-  last_staff_access_user: string | null;
+  last_staff_access_user: User | null;
   scraped_category: string;
 };
 

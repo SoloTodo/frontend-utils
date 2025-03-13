@@ -49,7 +49,7 @@ export default function ApiFormDateRangePickerComponent({
           maxDate={cleanedData[1] || new Date()}
           // inputFormat="dd/MM/yyyy"
           onChange={(newValue: Date | null) => handleChange(newValue, 0)}
-          renderInput={(params: TextFieldProps) => <TextField {...params} />}
+          // renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
         <DatePicker
           label="hasta"
@@ -58,7 +58,7 @@ export default function ApiFormDateRangePickerComponent({
           maxDate={new Date()}
           // inputFormat="dd/MM/yyyy"
           onChange={(newValue: Date | null) => handleChange(newValue, 1)}
-          renderInput={(params: TextFieldProps) => <TextField {...params} />}
+          // renderInput={(params: TextFieldProps) => <TextField {...params} />}
         />
       </Stack>
     </LocalizationProvider>
