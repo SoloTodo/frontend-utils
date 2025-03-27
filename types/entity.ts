@@ -64,7 +64,7 @@ export type Entity = {
 export type StaffInfo = {
   discovery_url: string;
   last_association: string | null;
-  last_association_user: User | null;
+  last_association_user: string | null;
   last_staff_access: string | null;
   last_staff_access_user: User | null;
   scraped_category: string;
