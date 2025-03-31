@@ -84,6 +84,7 @@ export const apiSettings = {
     dlPhoneId: 6695,
     gestionYEquiposId: 6662,
     samsungStoreId: 223,
+    sindelenStoreId: 7982,
     cellPhoneCategoryId: 6,
     technicalSpecificationsPurposeId: 1,
     categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
