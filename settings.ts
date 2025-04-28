@@ -87,6 +87,7 @@ export const apiSettings = {
     sindelenStoreId: 7982,
     abcStoreId: 8015,
     osojiStoreId: 8114,
+    tiendaMovistarID: 167,
     cellPhoneCategoryId: 6,
     technicalSpecificationsPurposeId: 1,
     categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
