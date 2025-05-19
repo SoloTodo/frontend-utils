@@ -27,7 +27,6 @@ export type Update = {
   id: number;
   last_updated: string;
   products_for_url_concurrency: number | null;
-  registry_file: string;
   status: number | null;
   store: string;
   unavailable_products_count: number | null;

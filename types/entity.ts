@@ -51,7 +51,7 @@ export type Entity = {
   last_updated: string;
   name: string;
   part_number?: string;
-  picture_urls: string[];
+  picture_urls: string[] | null;
   product?: InLineProduct;
   scraped_condition: string;
   seller?: string;
