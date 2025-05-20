@@ -55,8 +55,8 @@ export type Category = {
   short_description_template: string | null;
   browse_result_template: string | null;
   detail_template: string | null;
-  is_ai_managed: boolean;
   picture?: string;
+  is_ai_managed: boolean;
 };
 
 export type StoreScrapingOptions = {
