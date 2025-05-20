@@ -34,6 +34,17 @@ export type Update = {
   use_async: boolean;
 };
 
+export type StoreSectionPositionsUpdateLog = {
+  creation_date: string;
+  concurrency: number;
+  id: number;
+  last_updated: string;
+  status: number;
+  store: string;
+  url: string;
+  use_async: boolean;
+};
+
 export type Category = {
   budget_ordering: string | null;
   id: number;

@@ -12,6 +12,7 @@ export const apiSettings = {
         categories: endpoint + "categories/",
         bundles: endpoint + "bundles/",
         store_update_logs: endpoint + "store_update_logs/",
+        store_section_positions_update_logs: endpoint + "store_section_positions_update_logs/",
         entities: endpoint + "entities/",
         entity_histories: endpoint + "entity_histories/",
         entity_section_positions: endpoint + "entity_section_positions/",
