@@ -90,6 +90,7 @@ export const apiSettings = {
     osojiStoreId: 8114,
     tiendaMovistarID: 167,
     spDigitalID: 86,
+    mercadoLibreId: 260,
     cellPhoneCategoryId: 6,
     technicalSpecificationsPurposeId: 1,
     categoryBrowseResultPurposeUrl: endpoint + "category_template_purposes/3/",
