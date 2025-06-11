@@ -101,3 +101,12 @@ export type CategoryColumn = {
   purpose: string,
   country: string
 }
+
+export type Subcategory = {
+  id: number;
+  url: string;
+  category: string;
+  name: string;
+  slug: string;
+  params: string
+};
