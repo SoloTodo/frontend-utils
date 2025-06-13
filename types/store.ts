@@ -108,5 +108,6 @@ export type Subcategory = {
   category: string;
   name: string;
   slug: string;
-  params: string
+  params: string;
+  meta_tag_description?: string
 };
