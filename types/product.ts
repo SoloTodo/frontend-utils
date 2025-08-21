@@ -1,3 +1,4 @@
+import {Entity} from "./entity";
 import {User} from "./user";
 
 export type Product = {
@@ -27,3 +28,8 @@ export type Website = {
     permissions: string[];
     url: string;
 };
+
+export type ProductWithEntities = {
+    product: Product,
+    entities: Entity[]
+}
