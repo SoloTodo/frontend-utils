@@ -57,6 +57,7 @@ export type Category = {
   detail_template: string | null;
   picture?: string;
   is_ai_managed: boolean;
+  meta_tag_description?: string;
 };
 
 export type StoreScrapingOptions = {
@@ -101,3 +102,13 @@ export type CategoryColumn = {
   purpose: string,
   country: string
 }
+
+export type Subcategory = {
+  id: number;
+  url: string;
+  category: string;
+  name: string;
+  slug: string;
+  params: string;
+  meta_tag_description?: string
+};
