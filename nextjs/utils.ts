@@ -79,7 +79,6 @@ export async function jwtFetch(
     input: string,
     init?: FetchJsonInit,
 ) {
-    console.log(input)
     let {access, refresh} = getAuthTokens(context);
 
     const decodedAccessToken = JSON.parse(atob(access.split(".")[1]));

@@ -23,6 +23,7 @@ export const apiSettings = {
         leads: endpoint + "leads/",
         visits: endpoint + "visits/",
         reports: endpoint + "reports/",
+        report_downloads: endpoint + "report_downloads/",
         websites: endpoint + "websites/",
         category_specs_form_layouts: endpoint + "category_specs_form_layouts/",
         wtb_brands: endpoint + "wtb/brands/",
