@@ -64,6 +64,7 @@ export const apiSettings = {
     ripleyStoreId: 18,
     mercadoRipleyStoreId: 222,
     falabellaStoreId: 9,
+    falabellaMarketplaceStoreId: 8147,
     sodimacStoreId: 67,
     laPolarStoreId: 5,
     hitesStoreId: 87,
